@@ -1,8 +1,8 @@
 extends RigidBody2D
 
 var target_pos = Vector2.ZERO
-var kp = 5000.0   # Proportional gain
-var kd = 500.0    # Derivative gain (damping)
+var kp = 50000.0   # Proportional gain
+var kd = 5000.0    # Derivative gain (damping)
 
 func _physics_process(delta):
 	target_pos = get_global_mouse_position()
