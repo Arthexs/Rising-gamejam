@@ -1,5 +1,5 @@
 extends CharacterBody2D
-class_name player
+class_name Player
 
 @export var speed = 400 # How fast the player will move (pixels/sec).
 var screen_size 
