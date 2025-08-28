@@ -3,6 +3,8 @@ class_name player
 
 @export var speed = 400 # How fast the player will move (pixels/sec).
 var screen_size 
+var line_color = Color(1, 0, 0)  # Red line
+var line_width = 2
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -24,6 +26,14 @@ func _physics_process(delta: float):
 	#else:
 		#$AnimatedSprite2D.stop()
 	position += velocity * delta
+	queue_redraw()  # Forces redraw every frame
+
+func _draw():
+	var mouse_position = get_global_mouse_position()
+	var start_pos = Vector2.ZERO  # Character's local origin
+	var end_pos = to_local(mouse_position)  # Convert global to local space
+	draw_line(start_pos, end_pos, line_color, line_width)
+
 func _unhandled_input(event: InputEvent) -> void:
 	pass
 

@@ -8,10 +8,10 @@
 size = Vector2(126, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xpcdj"]
-size = Vector2(230, 20)
+size = Vector2(224, 20)
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(599, 299)
+position = Vector2(590, 301)
 script = ExtResource("1_a3d8c")
 metadata/_edit_group_ = true
 
@@ -22,13 +22,10 @@ texture = ExtResource("1_uvnfx")
 shape = SubResource("RectangleShape2D_a3d8c")
 
 [node name="weapon" type="RigidBody2D" parent="."]
-mass = 0.1
-gravity_scale = 0.0
-center_of_mass_mode = 1
 script = ExtResource("3_xpcdj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="weapon"]
-position = Vector2(99, 0)
+position = Vector2(102, 0)
 shape = SubResource("RectangleShape2D_xpcdj")
 
 [node name="Sprite2D" type="Sprite2D" parent="weapon"]
@@ -39,3 +36,4 @@ texture = ExtResource("1_uvnfx")
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
 node_a = NodePath("..")
 node_b = NodePath("../weapon")
+softness = 0.95
