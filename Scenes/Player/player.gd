@@ -10,22 +10,23 @@ func _ready():
 	screen_size = get_viewport_rect().size
 
 func _physics_process(delta: float):
-	var velocity = Vector2.ZERO # The player's movement vector.
+	var input_vector = Vector2.ZERO # The player's movement vector.
 	if Input.is_action_pressed("Right"):
-		velocity.x += 1
+		input_vector.x += 1
 	if Input.is_action_pressed("Left"):
-		velocity.x -= 1
+		input_vector.x -= 1
 	if Input.is_action_pressed("Down"):
-		velocity.y += 1
+		input_vector.y += 1
 	if Input.is_action_pressed("Up"):
-		velocity.y -= 1
-
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
+		input_vector.y -= 1
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		
 		#$AnimatedSprite2D.play()
 	#else:
-		#$AnimatedSprite2D.stop()
-	position += velocity * delta
+		#$AnimatedSprite2D.stssop()
+	velocity = input_vector * speed
+	move_and_slide()
 	queue_redraw()  # Forces redraw every frame
 
 func _draw():
