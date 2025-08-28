@@ -8,9 +8,12 @@
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1r6ip")
 
-[node name="MainTileMapLayer" parent="." instance=ExtResource("4_5yls4")]
+[node name="MainTileMapLayer" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_5yls4")]
+player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_qw60k")]
 
 [node name="PlayerCamera" parent="." node_paths=PackedStringArray("tracking_object") instance=ExtResource("3_5yls4")]
 tracking_object = NodePath("../Player")
+
+[connection signal="hurtbox_hit" from="Player" to="MainTileMapLayer" method="_on_player_hurtbox_hit"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dyt4v8eus8pq1"]
+[gd_scene load_steps=7 format=3 uid="uid://dyt4v8eus8pq1"]
 
 [ext_resource type="Script" uid="uid://in80cvamluap" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="1_uvnfx"]
@@ -10,9 +10,12 @@ size = Vector2(126, 128)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xpcdj"]
 size = Vector2(230, 20)
 
-[node name="Player" type="CharacterBody2D"]
-position = Vector2(599, 299)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
+size = Vector2(127, 126)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("1_a3d8c")
+hurtbox = NodePath("HurtBox")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -39,3 +42,13 @@ texture = ExtResource("1_uvnfx")
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
 node_a = NodePath("..")
 node_b = NodePath("../weapon")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0.5, -1)
+shape = SubResource("RectangleShape2D_mtuoh")
+
+[connection signal="body_shape_entered" from="HurtBox" to="." method="_on_hurt_box_body_shape_entered"]

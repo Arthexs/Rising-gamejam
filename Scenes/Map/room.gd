@@ -2,14 +2,19 @@ extends TileMapLayer
 
 class_name Room
 
-@onready var door_connections: Array[Vector4i] = get_door_connections()
+var door_connections: Array[Vector4i] = []
+var door_cells_positions: Array[Vector2i] = []
+var door_cell_connections: Array[int]
+var offset: Vector2i = Vector2i.ZERO
+var disabled_connection: int = -1
 
 func _ready() -> void:
-	pass
+	set_door_connections()
+	if door_connections.size() == 0:
+		print("help")
 
 ## Returns [pos_x, pos_y, direction, length]
-func get_door_connections() -> Array[Vector4i]:
-	var door_connections: Array[Vector4i] = []
+func set_door_connections() -> void:
 	var i_door: int = -1 # Index in door_connections
 	
 	var door_positions: Array[Vector3i] = get_door_tile_positions()
@@ -18,6 +23,9 @@ func get_door_connections() -> Array[Vector4i]:
 	
 	while i_now < door_positions.size() - 1:
 		i_now += 1
+		
+		if Vector2i(door_positions[i_now].x, door_positions[i_now].y) == Vector2i(19, 0):
+			pass
 		
 		if (Vector2i(door_positions[i_prev].x, door_positions[i_prev].y) - Vector2i(door_positions[i_now].x, door_positions[i_now].y)).length_squared() == 1:
 			var door_position: Vector2i = Vector2i(door_connections[i_door].x, door_connections[i_door].y)
@@ -28,11 +36,9 @@ func get_door_connections() -> Array[Vector4i]:
 		else:
 			i_door += 1
 			door_connections.append(Vector4i(door_positions[i_now].x, door_positions[i_now].y, door_positions[i_now].z, 1))
-			#var door_direction: Vector2i = Vector2i(Transform2D.IDENTITY.rotated(-PI/2) * Vector2(door_positions[i_now] - door_positions[i_now-1]))
 		
+		door_cell_connections.append(i_door)
 		i_prev = i_now
-	
-	return door_connections
 	
 	# Get tile position and what wall (x, y, enum Globals.Direction)
 func get_door_tile_positions() -> Array[Vector3i]:
@@ -65,6 +71,8 @@ func get_door_tile_positions() -> Array[Vector3i]:
 		is_door = cell.get_custom_data("Door") as bool
 		
 		if is_door:
+			door_cells_positions.append(cell_pos)
+			
 			var opening: Globals.directions
 			match (Vector2i(Transform2D.IDENTITY.rotated(-PI/2) * Vector2(search_directions[i_search]))):
 				Vector2i.UP:
@@ -80,3 +88,17 @@ func get_door_tile_positions() -> Array[Vector3i]:
 		
 	
 	return door_positions
+
+func rid_is_door(rid: RID) -> bool:
+	if not has_body_rid(rid): 
+		return false
+	else:
+		return door_cells_positions.has(get_coords_for_body_rid(rid))
+
+func door_connection_is_valid_for_rid(rid: RID) -> bool:
+	var door_index: int = door_cells_positions.find(get_coords_for_body_rid(rid))
+	return door_cell_connections[door_index] != disabled_connection
+
+func get_door_connection_for_rid(rid: RID) -> Vector4i:
+	var door_index: int = door_cells_positions.find(get_coords_for_body_rid(rid))
+	return door_connections[door_cell_connections[door_index]]
