@@ -7,11 +7,12 @@
 size = Vector2(126, 128)
 
 [node name="Player" type="CharacterBody2D"]
+position = Vector2(592, 304)
 script = ExtResource("1_a3d8c")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_uvnfx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("RectangleShape2D_a3d8c")
