@@ -86,4 +86,5 @@ func spawn_mobs(difficulty: int) -> void:
 		var pos: Vector2 = (active_room.offset + cell_pos) * Globals.tile_size
 		var mob = mob_scene.instantiate()
 		mob.global_position = pos
+		mob.playerchar = player
 		add_child(mob)
