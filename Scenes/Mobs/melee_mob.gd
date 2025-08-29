@@ -6,6 +6,7 @@ class_name MeleeMob
 @export var agent: NavigationAgent2D
 @export var player: Player
 @export var damage: float = 10.0
+@export var attack_interval: float = 1.0
 
 @export var force_threshold: float = 300000 # force threshold to be send flying
 @export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
@@ -40,6 +41,7 @@ func _ready() -> void:
 	attack_area.body_entered.connect(_on_attack_area_body_entered)
 	attack_area.body_exited.connect(_on_attack_area_body_exited)
 	#attack_timer.timeout.connect(_on_attack_timer_timeout)
+	attack_timer.wait_time = attack_interval
 	attack_timer.one_shot = true
 
 func set_target(target_position: Vector2):

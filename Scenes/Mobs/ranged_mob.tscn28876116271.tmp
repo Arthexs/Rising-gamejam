@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bo358una2qcdx"]
+[gd_scene load_steps=7 format=3 uid="uid://bo358una2qcdx"]
 
 [ext_resource type="Script" uid="uid://ssl3pypti8gp" path="res://Scenes/Mobs/ranged_mob.gd" id="1_jcomp"]
-[ext_resource type="PackedScene" uid="uid://c2cskic1md8os" path="res://Scenes/Mobs/projectile.tscn" id="2_5bao8"]
 [ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="2_tmhk6"]
 [ext_resource type="PackedScene" uid="uid://buug0vtr25jkt" path="res://Scenes/Player/health_module.tscn" id="3_tmhk6"]
 
@@ -10,8 +9,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cmymi"]
 size = Vector2(127, 129)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_tmhk6"]
-radius = 181.011
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tmhk6"]
+size = Vector2(184, 189)
 
 [node name="RangedMob" type="RigidBody2D" node_paths=PackedStringArray("agent")]
 mass = 50.0
@@ -20,8 +19,6 @@ gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_jcomp")
 agent = NodePath("NavigationAgent2D")
-damage_tuner = 7.0
-projectile_scene = ExtResource("2_5bao8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0.5)
@@ -32,17 +29,13 @@ texture = ExtResource("2_tmhk6")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(158, 94.5)
+shape = SubResource("RectangleShape2D_tmhk6")
+
+[node name="AttackTimer" type="Timer" parent="."]
+
 [node name="HealthModule" parent="." node_paths=PackedStringArray("box") instance=ExtResource("3_tmhk6")]
 box = NodePath("../CollisionShape2D")
-
-[node name="ShootingTimer" type="Timer" parent="."]
-
-[node name="ShootingArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ShootingArea"]
-position = Vector2(0, 1)
-shape = SubResource("CircleShape2D_tmhk6")
-
-[connection signal="timeout" from="ShootingTimer" to="." method="_on_shooting_timer_timeout"]
-[connection signal="area_entered" from="ShootingArea" to="." method="_on_shooting_area_area_entered"]
-[connection signal="area_exited" from="ShootingArea" to="." method="_on_shooting_area_area_exited"]
