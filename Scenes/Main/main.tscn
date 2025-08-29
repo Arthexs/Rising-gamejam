@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://dyt4v8eus8pq1" path="res://Scenes/Player/player.tscn" id="2_qw60k"]
 [ext_resource type="PackedScene" uid="uid://mdyfi8kuwke7" path="res://Scenes/Camera/player_camera.tscn" id="3_5yls4"]
 [ext_resource type="PackedScene" uid="uid://djwlxf205tx6g" path="res://Scenes/Map/main_tile_map_layer.tscn" id="4_5yls4"]
-[ext_resource type="PackedScene" uid="uid://c77rs567yitg2" path="res://Scenes/Mobs/melee_mob.tscn" id="5_p6jpk"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1r6ip")
@@ -17,9 +16,5 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_qw60k")]
 
-[node name="PlayerCamera" parent="." node_paths=PackedStringArray("tracking_object") instance=ExtResource("3_5yls4")]
-tracking_object = NodePath("../Player")
-
-[node name="meleeMob" parent="." node_paths=PackedStringArray("playerchar") instance=ExtResource("5_p6jpk")]
-position = Vector2(881, 187)
-playerchar = NodePath("../Player")
+[connection signal="change_room" from="MainTileMapLayer" to="PlayerCamera" method="limit_to_room"]
+[connection signal="hurtbox_hit" from="Player" to="MainTileMapLayer" method="_on_player_hurtbox_hit"]
