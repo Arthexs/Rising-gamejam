@@ -1,34 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cog70vgit1p6i"]
+[gd_scene load_steps=2 format=3 uid="uid://dm6kg1keoq72t"]
 
-[ext_resource type="Script" path="res://Scenes/Player/health_module.gd" id="1_y01vn"]
+[ext_resource type="Script" uid="uid://ca61hc2hri6n8" path="res://Scenes/Player/health_module.gd" id="1_y01vn"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y01vn"]
-bg_color = Color(0.82606, 0.82606, 0.82606, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_left = 5.0
-expand_margin_top = 5.0
-expand_margin_right = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lq0p6"]
-bg_color = Color(1, 0.129412, 0.0980392, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-[node name="HealthModule" type="ProgressBar"]
-offset_right = 4.0
-offset_bottom = 4.0
-theme_override_styles/background = SubResource("StyleBoxFlat_y01vn")
-theme_override_styles/fill = SubResource("StyleBoxFlat_lq0p6")
-value = 70.0
-show_percentage = false
+[node name="HealthModule" type="Node2D"]
 script = ExtResource("1_y01vn")
