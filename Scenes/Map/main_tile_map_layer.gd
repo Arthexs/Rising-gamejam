@@ -29,7 +29,7 @@ func _on_player_hurtbox_hit(body_rid: RID, body: Node2D, body_shape_index: int, 
 	# Do door logic
 	check_door(body_rid)
 
-# Performs door logic based on collision rid (if rid belongs to door cell will perform door logic of said cell)
+# Performs door logic based on collision drid (if rid belongs to door cell will perform door logic of said cell)
 func check_door(rid: RID) -> void:
 	if active_room.rid_is_door(rid):
 		if active_room.door_connection_is_valid_for_rid(rid):

@@ -10,7 +10,7 @@ func _process(delta: float) -> void:
 	position = tracking_object.global_position
 
 func limit_to_room(room: Room) -> void:
-	var rect: Rect2i = room.get_used_rect()
+	var rect: Rect2i = room.tilemap.get_used_rect()
 	
 	var screen_zoom: Vector2 = starting_size / Vector2((rect.size- Vector2i(1, 0)) * Globals.tile_size)
 	screen_zoom = screen_zoom.max(Vector2.ONE)

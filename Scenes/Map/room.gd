@@ -1,6 +1,8 @@
-extends TileMapLayer
+extends NavigationRegion2D
 
 class_name Room
+
+@export var tilemap: TileMapLayer
 
 var door_connections: Array[Vector4i] = []
 var door_cells_positions: Array[Vector2i] = []
@@ -44,7 +46,7 @@ func set_door_connections() -> void:
 func get_door_tile_positions() -> Array[Vector3i]:
 	var door_positions: Array[Vector3i]
 	
-	var first_cell_pos: Vector2i = get_used_cells()[0]
+	var first_cell_pos: Vector2i = tilemap.get_used_cells()[0]
 	var cell_pos: Vector2i = first_cell_pos
 	var start: bool = true
 	var wall_found: bool = false
@@ -60,7 +62,7 @@ func get_door_tile_positions() -> Array[Vector3i]:
 		cell_pos += search_directions[i_search]
 		#print("search cell_pos: ", cell_pos)
 		
-		var cell: TileData = get_cell_tile_data(cell_pos)
+		var cell: TileData = tilemap.get_cell_tile_data(cell_pos)
 		if cell == null:
 			cell_pos -= search_directions[i_search]
 			i_search += 2
@@ -90,15 +92,15 @@ func get_door_tile_positions() -> Array[Vector3i]:
 	return door_positions
 
 func rid_is_door(rid: RID) -> bool:
-	if not has_body_rid(rid): 
+	if not tilemap.has_body_rid(rid): 
 		return false
 	else:
-		return door_cells_positions.has(get_coords_for_body_rid(rid))
+		return door_cells_positions.has(tilemap.get_coords_for_body_rid(rid))
 
 func door_connection_is_valid_for_rid(rid: RID) -> bool:
-	var door_index: int = door_cells_positions.find(get_coords_for_body_rid(rid))
+	var door_index: int = door_cells_positions.find(tilemap.get_coords_for_body_rid(rid))
 	return door_cell_connections[door_index] != disabled_connection
 
 func get_door_connection_for_rid(rid: RID) -> Vector4i:
-	var door_index: int = door_cells_positions.find(get_coords_for_body_rid(rid))
+	var door_index: int = door_cells_positions.find(tilemap.get_coords_for_body_rid(rid))
 	return door_connections[door_cell_connections[door_index]]
