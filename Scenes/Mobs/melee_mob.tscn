@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c77rs567yitg2"]
+
+[ext_resource type="Script" uid="uid://db2ic06qdwqcx" path="res://melee_mob.gd" id="1_dqgl2"]
+[ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="2_ljmiq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xsotj"]
+size = Vector2(126, 128)
+
+[node name="meleeMob" type="RigidBody2D"]
+position = Vector2(-159, -93)
+script = ExtResource("1_dqgl2")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(160, 94)
+texture = ExtResource("2_ljmiq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(160, 93)
+shape = SubResource("RectangleShape2D_xsotj")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dyt4v8eus8pq1"]
+[gd_scene load_steps=6 format=3 uid="uid://dyt4v8eus8pq1"]
 
 [ext_resource type="Script" uid="uid://in80cvamluap" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="1_uvnfx"]
@@ -6,8 +6,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a3d8c"]
 size = Vector2(126, 128)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_xpcdj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xpcdj"]
 size = Vector2(230, 20)
@@ -25,7 +23,6 @@ shape = SubResource("RectangleShape2D_a3d8c")
 
 [node name="weapon" type="RigidBody2D" parent="."]
 mass = 10.0
-physics_material_override = SubResource("PhysicsMaterial_xpcdj")
 gravity_scale = 0.0
 center_of_mass_mode = 1
 script = ExtResource("3_xpcdj")
