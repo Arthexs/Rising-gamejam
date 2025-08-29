@@ -5,6 +5,10 @@ class_name Player
 @export var hurtbox: Area2D
 @export var health_module: HealthModule
 
+var applied_velocity: Vector2 = Vector2.ZERO
+@export var deaccel: float = 50.0 # px/s^2
+var can_collide: bool = true
+
 signal hurtbox_hit(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int)
 
 var screen_size 
@@ -32,9 +36,25 @@ func _physics_process(delta: float):
 		#$AnimatedSprite2D.play()
 	#else:
 		#$AnimatedSprite2D.stssop()
-	velocity = input_vector * speed
-	move_and_slide()
-	queue_redraw()  # Forces redraw every frame
+	if applied_velocity == Vector2.ZERO:
+		velocity = input_vector * speed
+	else:
+		velocity = applied_velocity
+		if deaccel > applied_velocity.length():
+			applied_velocity = Vector2.ZERO
+			can_collide = true
+		else:
+			applied_velocity -= applied_velocity.normalized() * deaccel
+	
+	if can_collide:
+		move_and_slide()
+	else:
+		global_position += velocity * delta
+	#queue_redraw()  # Forces redraw every frame
+
+func apply_velocity(v: Vector2, hitable: bool) -> void:
+	applied_velocity = v
+	can_collide = hitable
 
 func _draw():
 	var mouse_position = get_global_mouse_position()

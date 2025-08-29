@@ -4,7 +4,11 @@ class_name RoomsManager
 
 @export var player: Player
 @export var mob_scene: PackedScene
+@export var rocks: CPUParticles2D
+
 var spawnable_rooms: Array[Room]
+
+signal do_screenshake(magnitude: float, duration: float)
 
 var active_room: Room
 var previous_room: Room
@@ -17,7 +21,7 @@ func _ready() -> void:
 	
 	active_room = get_node("Special/RoomStart").duplicate()
 	active_room.visible = true
-	add_child(active_room)
+	get_node("ActiveRooms").add_child(active_room)
 	
 	change_room.emit(active_room)
 
@@ -57,10 +61,10 @@ func check_door(rid: RID) -> void:
 				active_room.offset = offset_pos
 				active_room.visible = true
 				active_room.global_position = offset_pos * Globals.tile_size
-				add_child(active_room)
+				get_node("ActiveRooms").add_child(active_room)
 				
+				entering_room(door_connection)
 				change_room.emit(active_room)
-				spawn_mobs(2)
 
 # searches for connection from given connection. Returns -1 if invalid
 func get_matching_connection_index(connection: Vector4i, i_room: int) -> int:
@@ -77,15 +81,29 @@ func get_matching_connection_index(connection: Vector4i, i_room: int) -> int:
 		return i
 	
 	return -1
+
+func entering_room(connection: Vector4i) -> void:
+	call_deferred("spawn_mobs", 2)
+	var directions: Array[Vector2] = [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]
+	player.apply_velocity(directions[connection.z] * Globals.door_velocity, false)
+	do_screenshake.emit(70.0, 0.3)
 	
+	rocks.position = player.global_position + directions[connection.z]*Globals.tile_size
+	rocks.direction = directions[connection.z]
+	rocks.restart()
+	rocks.emitting = true
+	
+	print("apply velocity")
+	# start entering animation and stuff
+
 func spawn_mobs(difficulty: int) -> void:
 	var activeTiles: Array[Vector2i] = active_room.tilemap.get_used_cells()
 	var selectedTiles: Array[Vector2i]
-	for i in range(difficulty):
+	for i: int in range(difficulty):
 		var i_tile: int = randi() % activeTiles.size()
 		var cell_pos: Vector2i = activeTiles[i_tile]
 		var pos: Vector2 = (active_room.offset + cell_pos) * Globals.tile_size
-		var mob = mob_scene.instantiate()
+		var mob: MeleeMob = mob_scene.instantiate()
 		mob.global_position = pos
-		mob.playerchar = player
+		mob.player = player
 		add_child(mob)

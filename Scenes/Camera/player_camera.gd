@@ -7,7 +7,29 @@ func _ready() -> void:
 	starting_size = get_viewport_rect().size
 
 func _process(delta: float) -> void:
+	do_cam_movement()
+
+var shake_offset: Vector2 = Vector2.ZERO
+var shake_magnitude: float = 1
+var max_magnitude: float = 1
+var ticks: int = 0
+var tick_goal: int = 0
+
+func shake_cam(magnitude: float, duration: float) -> void:
+	#print("shake")
+	ticks = 0
+	tick_goal = int(duration/get_physics_process_delta_time())
+	max_magnitude = magnitude
+	shake_magnitude = max_magnitude
+
+func do_cam_movement() -> void:
 	position = tracking_object.global_position
+	
+	if ticks < tick_goal:
+		offset = shake_magnitude * Vector2.UP.rotated(randf())
+		
+		ticks += 1
+		shake_magnitude = (1-sin(PI/2*ticks/tick_goal))*max_magnitude
 
 func limit_to_room(room: Room) -> void:
 	var rect: Rect2i = room.tilemap.get_used_rect()

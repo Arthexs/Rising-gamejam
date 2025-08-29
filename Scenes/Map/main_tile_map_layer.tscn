@@ -1,15 +1,44 @@
-[gd_scene load_steps=4 format=3 uid="uid://djwlxf205tx6g"]
+[gd_scene load_steps=6 format=3 uid="uid://djwlxf205tx6g"]
 
 [ext_resource type="PackedScene" uid="uid://nggnhxwlr5cy" path="res://Scenes/Map/room0.tscn" id="2_ndu2j"]
+[ext_resource type="Texture2D" uid="uid://d2r7tgn8gmuie" path="res://Assets/Particles/rock.png" id="2_u4jum"]
 [ext_resource type="Script" uid="uid://bu0ybarai5poy" path="res://Scenes/Map/main_tile_map_layer.gd" id="2_yxtan"]
 [ext_resource type="PackedScene" uid="uid://4jpj2ep3ot7x" path="res://Scenes/Map/room_start.tscn" id="3_u4jum"]
 
-[node name="Rooms" type="Node2D"]
+[sub_resource type="Curve" id="Curve_suw0k"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.97753, 0.0, 0, 0]
+point_count = 2
+
+[node name="Rooms" type="Node2D" node_paths=PackedStringArray("rocks")]
 script = ExtResource("2_yxtan")
+rocks = NodePath("Particles/Rocks")
+
+[node name="ActiveRooms" type="Node2D" parent="."]
+
+[node name="Particles" type="Node2D" parent="."]
+
+[node name="Rocks" type="CPUParticles2D" parent="Particles"]
+emitting = false
+texture = ExtResource("2_u4jum")
+lifetime = 5.0
+one_shot = true
+explosiveness = 1.0
+direction = Vector2(0, 1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 400.0
+initial_velocity_max = 700.0
+damping_min = 1000.0
+damping_max = 2000.0
+damping_curve = SubResource("Curve_suw0k")
+angle_min = -305.5
+angle_max = 247.2
+scale_amount_min = 0.6
+scale_amount_max = 1.7
 
 [node name="Level1" type="Node2D" parent="."]
 
 [node name="Room0" parent="Level1" instance=ExtResource("2_ndu2j")]
+visible = false
 
 [node name="Special" type="Node2D" parent="."]
 
