@@ -2,37 +2,39 @@ extends RigidBody2D
 
 @export var speed: float = 200.0
 @export var agent: NavigationAgent2D
-@export var playerchar: CharacterBody2D
+@export var player: Player
 @export var damage: float = 10.0
+
+@export var force_threshold: float = 300000 # force threshold to be send flying
+@export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
+@export var damage_tuner: float = 1.0
+@export var friction_coefficient: float = 50 # px/m/s
+@export var acceleration: float = 3.0
+var movement_force = acceleration * mass * 32 # px/m
 
 @onready var attack_area = $AttackArea
 @onready var attack_timer = $AttackTimer
 
 signal death()
 
+var speed_scalar: float = 200.0
 var player_in_range: Player = null
-var path: PackedVector2Array = []
-var current_point_index: int = 0
-var speed_scalar: float = 1000.0
-
+var prev_velocity: Vector2 = Vector2.ZERO
+var mass_max: float
+var flying: bool = false
 var health_module: HealthModule
 
-var prev_velocity: Vector2 = Vector2.ZERO
-var mass_max: float = mass
-var flying: bool = false
-@export var force_threshold: float = 300000 # force threshold to be send flying
-@export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
-@export var damage_tuner: float = 1.0
-
 func _ready() -> void:
+	mass_max = mass
+	health_module = get_node("HealthModule")
+	
 	agent.target_desired_distance = 10
-	set_target(playerchar.global_position)
+	set_target(player.global_position)
+	
 	attack_area.body_entered.connect(_on_attack_area_body_entered)
 	attack_area.body_exited.connect(_on_attack_area_body_exited)
 	attack_timer.timeout.connect(_on_attack_timer_timeout)
 	attack_timer.one_shot = true
-	
-	health_module = get_node("HealthModule")
 
 func set_target(target_position: Vector2):
 	agent.target_position = target_position
@@ -41,14 +43,14 @@ func set_target(target_position: Vector2):
 func _physics_process(delta: float) -> void:
 	handle_damage(delta)
 	
-	set_target(playerchar.global_position)
+	set_target(player.global_position)
 	if not agent.is_target_reached():
-		var target_point: Vector2 = agent.get_next_path_position()
-		var dir: Vector2 = (target_point - global_position).normalized()
-		apply_central_force(dir*speed_scalar)
-		var distance = global_position.distance_to(target_point)
-		#print("direction", dir, "target", target_point, "mob", global_position)
-
+		var direction: Vector2 = (agent.get_next_path_position() - global_position).normalized()
+		apply_movement(direction)
+	
+	apply_friction()
+	prev_velocity = linear_velocity
+	
 func handle_damage(delta: float) -> void:
 	var delta_vel: float = linear_velocity.length() - prev_velocity.length()
 	
@@ -71,8 +73,6 @@ func handle_damage(delta: float) -> void:
 			linear_velocity = Vector2.ZERO
 			mass = mass_max
 			flying = false
-	
-	prev_velocity = linear_velocity
 
 func _on_attack_area_body_entered(body):
 	if body is Player:
@@ -93,3 +93,28 @@ func _on_attack_timer_timeout() -> void:
 
 func died() -> void:
 	death.emit()
+
+func apply_friction() -> void:
+	#print(linear_velocity.length(), "/", max_vel)
+	if flying:
+		#flying = false
+		apply_central_force(-linear_velocity.normalized() * friction_coefficient*0.1)
+	else:
+		apply_central_force(-linear_velocity.normalized() * friction_coefficient)
+		#flying = true
+
+func apply_movement(direction: Vector2) -> void:
+	if flying:
+		print("flying")
+		return
+	
+	var comp_dir: Vector2
+	# Negative rejection
+	comp_dir = -(linear_velocity - linear_velocity.dot(direction) * direction) * mass * 5
+	# Target force (compensate when going in the wrong direction)
+	if linear_velocity.dot(direction) < 0:
+		comp_dir += direction * movement_force * 7.5
+	else:
+		comp_dir += direction * movement_force
+	
+	apply_central_force(comp_dir)
