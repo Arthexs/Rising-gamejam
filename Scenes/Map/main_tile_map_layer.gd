@@ -3,6 +3,7 @@ extends Node2D
 class_name RoomsManager
 
 @export var player: Player
+@export var mob_scene: PackedScene
 var spawnable_rooms: Array[Room]
 
 var active_room: Room
@@ -58,6 +59,7 @@ func check_door(rid: RID) -> void:
 				add_child(active_room)
 				
 				change_room.emit(active_room)
+				spawn_mobs(2)
 
 # searches for connection from given connection. Returns -1 if invalid
 func get_matching_connection_index(connection: Vector4i, i_room: int) -> int:
@@ -74,3 +76,15 @@ func get_matching_connection_index(connection: Vector4i, i_room: int) -> int:
 		return i
 	
 	return -1
+	
+func spawn_mobs(difficulty: int) -> void:
+	var activeTiles: Array[Vector2i] = active_room.tilemap.get_used_cells()
+	var selectedTiles: Array[Vector2i]
+	for i in range(difficulty):
+		var i_tile: int = randi() % activeTiles.size()
+		var cell_pos: Vector2i = activeTiles[i_tile]
+		var pos: Vector2 = (active_room.offset + cell_pos) * Globals.tile_size
+		var mob = mob_scene.instantiate()
+		mob.global_position = pos
+		mob.playerchar = player
+		add_child(mob)
