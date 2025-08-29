@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c77rs567yitg2"]
+[gd_scene load_steps=7 format=3 uid="uid://c77rs567yitg2"]
 
 [ext_resource type="Script" uid="uid://db2ic06qdwqcx" path="res://Scenes/Mobs/melee_mob.gd" id="1_dqgl2"]
 [ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="2_ljmiq"]
+[ext_resource type="PackedScene" uid="uid://buug0vtr25jkt" path="res://Scenes/Player/health_module.tscn" id="3_ljmiq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dqgl2"]
 rough = true
@@ -38,5 +39,8 @@ position = Vector2(158, 94.5)
 shape = SubResource("RectangleShape2D_dqgl2")
 
 [node name="AttackTimer" type="Timer" parent="."]
+
+[node name="HealthModule" parent="." node_paths=PackedStringArray("box") instance=ExtResource("3_ljmiq")]
+box = NodePath("../CollisionShape2D")
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]

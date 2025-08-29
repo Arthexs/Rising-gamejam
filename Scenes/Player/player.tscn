@@ -17,9 +17,10 @@ size = Vector2(230, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
 size = Vector2(126, 127)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "health_module")]
 script = ExtResource("1_a3d8c")
 hurtbox = NodePath("Hitbox")
+health_module = NodePath("HealthModule")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -56,7 +57,7 @@ collision_mask = 4
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_mtuoh")
 
-[node name="ProgressBar" parent="." node_paths=PackedStringArray("box") instance=ExtResource("4_mtuoh")]
+[node name="HealthModule" parent="." node_paths=PackedStringArray("box") instance=ExtResource("4_mtuoh")]
 box = NodePath("../CollisionShape2D")
 
 [connection signal="body_shape_entered" from="Hitbox" to="." method="_on_hurt_box_body_shape_entered"]

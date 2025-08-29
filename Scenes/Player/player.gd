@@ -3,6 +3,7 @@ class_name Player
 
 @export var speed = 400 # How fast the player will move (pixels/sec).
 @export var hurtbox: Area2D
+@export var health_module: HealthModule
 
 signal hurtbox_hit(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int)
 
@@ -46,6 +47,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta) -> void:
 	pass
+
+func take_damage(damage: float) -> void:
+	health_module.take_damage(damage)
 
 #func get_hurt_rids() -> Array[RID]:
 	#var slide_collisions: Array[RID] = []
