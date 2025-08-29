@@ -10,6 +10,7 @@ var active_room: Room
 var previous_room: Room
 
 signal change_room(room: Room)
+signal added_monsters()
 
 func _ready() -> void:
 	spawnable_rooms.append_array(get_node("Level1").get_children() as Array[Room])

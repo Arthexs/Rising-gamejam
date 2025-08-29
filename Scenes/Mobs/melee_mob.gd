@@ -8,6 +8,8 @@ extends RigidBody2D
 @onready var attack_area = $AttackArea
 @onready var attack_timer = $AttackTimer
 
+signal death()
+
 var player_in_range: Player = null
 var path: PackedVector2Array = []
 var current_point_index: int = 0
@@ -88,3 +90,6 @@ func try_attack():
 
 func _on_attack_timer_timeout() -> void:
 	try_attack()
+
+func died() -> void:
+	death.emit()

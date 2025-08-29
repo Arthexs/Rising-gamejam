@@ -11,15 +11,17 @@ var kd = 500000.0
 @export var impulse_scale: float = 1.0
 @export var max_impulse: float = 500.0
 @export var minimum_impulse: float = 10.0
+@onready var _animated_sprite = $AnimatedSprite2D
 
 func _ready():
 	contact_monitor = true
 	max_contacts_reported = 8
+	_animated_sprite.play("weapon")
 
 func _physics_process(delta):
 	# Rotation control (unchanged)
 	target_pos = get_global_mouse_position()
-	var desired_angle = (target_pos - global_position).angle()
+	var desired_angle = (target_pos - global_position).angle()+PI/4
 	var angle_diff = wrapf(desired_angle - rotation, -PI, PI)
 	var angular_velocity_error = -angular_velocity
 	var torque = (angle_diff * kp) + (angular_velocity_error * kd)

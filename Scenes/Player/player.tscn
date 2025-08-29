@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dyt4v8eus8pq1"]
+[gd_scene load_steps=23 format=3 uid="uid://dyt4v8eus8pq1"]
 
 [ext_resource type="Script" uid="uid://in80cvamluap" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://bds3x30hrriwb" path="res://Scenes/Player/weapon.gd" id="3_xpcdj"]
+[ext_resource type="Texture2D" uid="uid://ciwjnd6te1jlo" path="res://Assets/Hammer (5).png" id="4_htcer"]
 [ext_resource type="PackedScene" uid="uid://buug0vtr25jkt" path="res://Scenes/Player/health_module.tscn" id="4_mtuoh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a3d8c"]
@@ -11,13 +12,106 @@ size = Vector2(126, 128)
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mtuoh"]
 bounce = 1.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xpcdj"]
-size = Vector2(230, 20)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0ac"]
+size = Vector2(100.409, 187.383)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0u5uq"]
+atlas = ExtResource("4_htcer")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlvik"]
+atlas = ExtResource("4_htcer")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gk6dx"]
+atlas = ExtResource("4_htcer")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhyir"]
+atlas = ExtResource("4_htcer")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74mp2"]
+atlas = ExtResource("4_htcer")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oikmp"]
+atlas = ExtResource("4_htcer")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06tpx"]
+atlas = ExtResource("4_htcer")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7g0yx"]
+atlas = ExtResource("4_htcer")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dey5f"]
+atlas = ExtResource("4_htcer")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5xpd"]
+atlas = ExtResource("4_htcer")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ks1b7"]
+atlas = ExtResource("4_htcer")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnuln"]
+atlas = ExtResource("4_htcer")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aqm4k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0u5uq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlvik")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gk6dx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhyir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74mp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oikmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06tpx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7g0yx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dey5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5xpd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ks1b7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnuln")
+}],
+"loop": true,
+"name": &"weapon",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
 size = Vector2(126, 127)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "health_module")]
+position = Vector2(0, -4)
 script = ExtResource("1_a3d8c")
 hurtbox = NodePath("Hitbox")
 health_module = NodePath("HealthModule")
@@ -30,20 +124,25 @@ texture = ExtResource("1_uvnfx")
 shape = SubResource("RectangleShape2D_a3d8c")
 
 [node name="weapon" type="RigidBody2D" parent="."]
-mass = 30.0
+mass = 50.0
 physics_material_override = SubResource("PhysicsMaterial_mtuoh")
 gravity_scale = 0.0
 center_of_mass_mode = 1
 script = ExtResource("3_xpcdj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="weapon"]
-position = Vector2(99, 0)
-shape = SubResource("RectangleShape2D_xpcdj")
+position = Vector2(61.25, -62.25)
+rotation = 0.785398
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_dd0ac")
 
-[node name="Sprite2D" type="Sprite2D" parent="weapon"]
-position = Vector2(100, 0)
-scale = Vector2(1.76406, 0.109375)
-texture = ExtResource("1_uvnfx")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="weapon"]
+texture_filter = 1
+position = Vector2(92.5, -92.5)
+scale = Vector2(6.78125, 6.78125)
+sprite_frames = SubResource("SpriteFrames_aqm4k")
+animation = &"weapon"
+frame_progress = 0.0454644
 
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
 node_a = NodePath("..")
