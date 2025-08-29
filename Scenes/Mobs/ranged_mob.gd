@@ -10,9 +10,11 @@ var movement_target_position: Vector2 = Vector2(60.0,180.0)
 @export var friction_coefficient: float = 20 # px/m/s
 var movement_force = acceleration * mass * 32 # px/m
 
-@export var impact_threshold: float = 0.6 # Fraction of velocity needed to be lost to be considered impacted
-@export var impact_damage_tuner: float = 1.0
+@export var force_threshold: float = 300000 # force threshold to be send flying
+@export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
+@export var damage_tuner: float = 1.0
 
+var mass_max: float
 var flying: bool = false
 
 var prev_velocity: Vector2 = Vector2.ZERO
@@ -22,6 +24,8 @@ var health_module: HealthModule
 func _ready():
 	# These values need to be adjusted for the actor's speed
 	# and the navigation layout.
+	mass_max = mass
+	
 	health_module = get_node("HealthModule")
 	nav_agent.target_desired_distance = 10.0
 	contact_monitor = true
@@ -32,14 +36,26 @@ func set_target(target: Vector2):
 	nav_agent.get_next_path_position()
 
 func _physics_process(delta):
-	var delta_vel: float = (linear_velocity - prev_velocity).length()
-
-	if delta_vel/prev_velocity.length() > impact_threshold && flying:
-		var force: float = delta_vel/delta * mass
+	var delta_vel: float = linear_velocity.length() - prev_velocity.length()
+	
+	var force: float = abs(delta_vel)/delta * mass_max
+	
+	if force > force_threshold:
 		var damage: float = force/100000
 		print("damage taken: ", damage)
 		health_module.take_damage(damage)
-		linear_velocity = Vector2.ZERO
+		mass = 0.1*mass_max
+		#apply_central_force(linear_velocity.normalized() * force)
+		flying = true
+	
+	if prev_velocity.length() != 0:
+		print(delta_vel/prev_velocity.length(), " < ", - (1-brake_threshold))
+		if delta_vel/prev_velocity.length() < - (1-brake_threshold) && flying:
+			var damage: float = force/100000
+			print("damage taken: ", damage)
+			health_module.take_damage(damage)
+			linear_velocity = Vector2.ZERO
+			mass = mass_max
 			#apply_impulse(applied_impulse * 1.0, state.get_contact_collider_position(i))
 			#collider.apply_impulse(-applied_impulse, state.get_contact_collider_position(i))
 			#print("apply impulse")
@@ -73,12 +89,12 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 
 func apply_friction() -> void:
 	#print(linear_velocity.length(), "/", max_vel)
-	if linear_velocity.length() < max_vel:
-		flying = false
-		apply_central_force(-linear_velocity.normalized() * friction_coefficient)
-	else:
-		flying = true
+	if flying:
+		#flying = false
 		apply_central_force(-linear_velocity.normalized() * friction_coefficient*0.1)
+	else:
+		apply_central_force(-linear_velocity.normalized() * friction_coefficient)
+		#flying = true
 
 func apply_movement(direction: Vector2) -> void:
 	if flying:

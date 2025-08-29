@@ -22,4 +22,4 @@ func _physics_process(delta):
 		var dir: Vector2 = (target_point - global_position).normalized()
 		apply_central_force(dir*speed_scalar)
 		var distance = global_position.distance_to(target_point)
-		print("direction", dir, "target", target_point, "mob", global_position)
+		#print("direction", dir, "target", target_point, "mob", global_position)

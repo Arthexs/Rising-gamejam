@@ -20,7 +20,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="ProgressBar" type="ProgressBar"]
+[node name="HealthModule" type="ProgressBar"]
 offset_right = 138.0
 offset_bottom = 9.0
 theme_override_styles/background = SubResource("StyleBoxFlat_y01vn")

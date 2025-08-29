@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+class_name Hammer
+
 # Rotation PD controller
 var target_pos = Vector2.ZERO
 var kp = 5000000.0
