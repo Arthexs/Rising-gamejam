@@ -3,12 +3,9 @@
 [ext_resource type="Script" uid="uid://bhj07vmjj8ys3" path="res://Scenes/Camera/player_camera.gd" id="1_cjy00"]
 
 [node name="PlayerCamera" type="Camera2D"]
+zoom = Vector2(3, 3)
 limit_smoothed = true
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
-drag_left_margin = 0.4
-drag_top_margin = 0.4
-drag_right_margin = 0.4
-drag_bottom_margin = 0.4
 script = ExtResource("1_cjy00")

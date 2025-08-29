@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name Player
 
-@export var speed = 400 # How fast the player will move (pixels/sec).
+@export var speed = 100 # How fast the player will move (pixels/sec).
 @export var hurtbox: Area2D
 @export var health_module: HealthModule
 

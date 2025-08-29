@@ -3,6 +3,8 @@ extends Camera2D
 @export var tracking_object: Node2D
 var starting_size: Vector2
 
+var base_zoom: Vector2 = zoom
+
 func _ready() -> void:
 	starting_size = get_viewport_rect().size
 
@@ -35,7 +37,7 @@ func limit_to_room(room: Room) -> void:
 	var rect: Rect2i = room.tilemap.get_used_rect()
 	
 	var screen_zoom: Vector2 = starting_size / Vector2((rect.size- Vector2i(1, 0)) * Globals.tile_size)
-	screen_zoom = screen_zoom.max(Vector2.ONE)
+	screen_zoom = screen_zoom.max(base_zoom)
 	
 	var upper_bound_zoom: float = max(screen_zoom.x, screen_zoom.y)
 	

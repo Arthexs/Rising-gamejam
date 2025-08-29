@@ -2,16 +2,16 @@ extends RigidBody2D
 
 class_name MeleeMob
 
-@export var speed: float = 200.0
+#@export var speed: float = 50.0
 @export var agent: NavigationAgent2D
 @export var player: Player
 @export var damage: float = 10.0
 
-@export var force_threshold: float = 300000 # force threshold to be send flying
+@export var force_threshold: float = 170000 # force threshold to be send flying
 @export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
 @export var damage_tuner: float = 1.0
-@export var friction_coefficient: float = 50 # px/m/s
-@export var acceleration: float = 3.0
+@export var friction_coefficient: float = 25 # px/m/s
+@export var acceleration: float = 1.5
 var movement_force = acceleration * mass * 32 # px/m
 
 @onready var attack_area = $AttackArea
@@ -19,7 +19,7 @@ var movement_force = acceleration * mass * 32 # px/m
 
 signal death()
 
-var speed_scalar: float = 200.0
+#var speed_scalar: float = 200.0
 var player_in_range: Player = null
 
 var health_module: HealthModule
@@ -61,9 +61,9 @@ func handle_damage(delta: float) -> void:
 	var delta_vel: float = linear_velocity.length() - prev_velocity.length()
 	
 	var force: float = abs(delta_vel)/delta * mass_max
-	
+	#print("force: ", force)
 	if force > force_threshold:
-		var damage: float = force/100000
+		var damage: float = force/100000 * damage_tuner
 		#print("damage taken: ", damage)
 		health_module.take_damage(damage)
 		mass = 0.1*mass_max
@@ -73,7 +73,7 @@ func handle_damage(delta: float) -> void:
 	if prev_velocity.length() != 0:
 		#print(delta_vel/prev_velocity.length(), " < ", - (1-brake_threshold))
 		if delta_vel/prev_velocity.length() < - (1-brake_threshold) && flying:
-			var damage: float = force/100000
+			var damage: float = force/100000 * damage_tuner
 			#print("damage taken: ", damage)
 			health_module.take_damage(damage)
 			linear_velocity = Vector2.ZERO

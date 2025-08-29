@@ -7,13 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://buug0vtr25jkt" path="res://Scenes/Player/health_module.tscn" id="4_mtuoh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a3d8c"]
-size = Vector2(126, 128)
+size = Vector2(32, 32)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mtuoh"]
 bounce = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0ac"]
-size = Vector2(100.409, 187.383)
+size = Vector2(16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0u5uq"]
 atlas = ExtResource("4_htcer")
@@ -108,7 +108,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
-size = Vector2(126, 127)
+size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "health_module")]
 position = Vector2(0, -4)
@@ -118,12 +118,14 @@ health_module = NodePath("HealthModule")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_uvnfx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_a3d8c")
 
 [node name="weapon" type="RigidBody2D" parent="."]
+position = Vector2(8, -8)
 mass = 50.0
 physics_material_override = SubResource("PhysicsMaterial_mtuoh")
 gravity_scale = 0.0
@@ -131,14 +133,13 @@ center_of_mass_mode = 1
 script = ExtResource("3_xpcdj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="weapon"]
-position = Vector2(61.25, -62.25)
+position = Vector2(14, -14)
 rotation = 0.785398
 shape = SubResource("RectangleShape2D_dd0ac")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="weapon"]
 texture_filter = 1
-position = Vector2(92.5, -92.5)
-scale = Vector2(6.78125, 6.78125)
+position = Vector2(16, -16)
 sprite_frames = SubResource("SpriteFrames_aqm4k")
 animation = &"weapon"
 frame_progress = 0.0454644
@@ -152,7 +153,6 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_mtuoh")
 
 [node name="HealthModule" parent="." node_paths=PackedStringArray("box") instance=ExtResource("4_mtuoh")]

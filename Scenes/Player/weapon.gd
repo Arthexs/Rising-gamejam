@@ -4,8 +4,8 @@ class_name Hammer
 
 # Rotation PD controller
 var target_pos = Vector2.ZERO
-var kp = 5000000.0
-var kd = 500000.0
+var kp = 1250000.0
+var kd = 300000.0
 
 # Knockback tuning
 @export var impulse_scale: float = 1.0

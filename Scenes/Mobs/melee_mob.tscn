@@ -8,13 +8,12 @@
 rough = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xsotj"]
-size = Vector2(126, 128)
+size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dqgl2"]
-size = Vector2(184, 189)
+size = Vector2(40, 40)
 
 [node name="meleeMob" type="RigidBody2D" node_paths=PackedStringArray("agent")]
-position = Vector2(-159, -93)
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_dqgl2")
 gravity_scale = 0.0
@@ -23,11 +22,10 @@ agent = NodePath("NavigationAgent2D")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(160, 94)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_ljmiq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(160, 93)
 shape = SubResource("RectangleShape2D_xsotj")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
@@ -35,7 +33,6 @@ shape = SubResource("RectangleShape2D_xsotj")
 [node name="AttackArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(158, 94.5)
 shape = SubResource("RectangleShape2D_dqgl2")
 
 [node name="AttackTimer" type="Timer" parent="."]

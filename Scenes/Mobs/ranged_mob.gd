@@ -5,12 +5,11 @@ var movement_target_position: Vector2 = Vector2(60.0,180.0)
 
 @export var nav_agent: NavigationAgent2D
 @export var player: Player
-@export var acceleration: float = 3.0
-@export var max_vel: float = 300.0
-@export var friction_coefficient: float = 50 # px/m/s
+@export var acceleration: float = 0.6
+@export var friction_coefficient: float = 25 # px/m/s
 var movement_force = acceleration * mass * 32 # px/m
 
-@export var force_threshold: float = 300000 # force threshold to be send flying
+@export var force_threshold: float = 170000 # force threshold to be send flying
 @export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
 @export var damage_tuner: float = 1.0
 
@@ -52,8 +51,8 @@ func handle_damage(delta: float) -> void:
 	var force: float = abs(delta_vel)/delta * mass_max
 	
 	if force > force_threshold:
-		var damage: float = force/100000
-		print("damage taken: ", damage)
+		var damage: float = force/100000 * damage_tuner
+		#print("damage taken: ", damage)
 		health_module.take_damage(damage)
 		mass = 0.1*mass_max
 		#apply_central_force(linear_velocity.normalized() * force)
@@ -62,7 +61,7 @@ func handle_damage(delta: float) -> void:
 	if prev_velocity.length() != 0:
 		#print(delta_vel/prev_velocity.length(), " < ", - (1-brake_threshold))
 		if delta_vel/prev_velocity.length() < - (1-brake_threshold) && flying:
-			var damage: float = force/100000
+			var damage: float = force/100000 * damage_tuner
 			#print("damage taken: ", damage)
 			health_module.take_damage(damage)
 			linear_velocity = Vector2.ZERO
@@ -103,7 +102,7 @@ func apply_friction() -> void:
 
 func apply_movement(direction: Vector2) -> void:
 	if flying:
-		print("flying")
+		#print("flying")
 		return
 	
 	var comp_dir: Vector2
