@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dyt4v8eus8pq1"]
+[gd_scene load_steps=8 format=3 uid="uid://dyt4v8eus8pq1"]
 
 [ext_resource type="Script" uid="uid://in80cvamluap" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="1_uvnfx"]
 [ext_resource type="Script" uid="uid://bds3x30hrriwb" path="res://Scenes/Player/weapon.gd" id="3_xpcdj"]
+[ext_resource type="PackedScene" uid="uid://buug0vtr25jkt" path="res://Scenes/Player/health_module.tscn" id="4_mtuoh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a3d8c"]
 size = Vector2(126, 128)
@@ -14,7 +15,6 @@ size = Vector2(230, 20)
 size = Vector2(126, 127)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox")]
-position = Vector2(599, 299)
 script = ExtResource("1_a3d8c")
 hurtbox = NodePath("Hitbox")
 metadata/_edit_group_ = true
@@ -51,5 +51,8 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_mtuoh")
+
+[node name="ProgressBar" parent="." node_paths=PackedStringArray("box") instance=ExtResource("4_mtuoh")]
+box = NodePath("../CollisionShape2D")
 
 [connection signal="body_shape_entered" from="Hitbox" to="." method="_on_hurt_box_body_shape_entered"]
