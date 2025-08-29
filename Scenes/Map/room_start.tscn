@@ -4,6 +4,10 @@
 [ext_resource type="Script" uid="uid://cnjbh0gl5gaah" path="res://Scenes/Map/room.gd" id="2_eh42m"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6krgi"]
+vertices = PackedVector2Array(288, 797.078, 59.9766, 798.57, 71.0313, 73.6797, 288, 480, 542, 71.2734, 542, 97.5, 544, 480, 738, 97.5, 960.008, 69.1406, 1317.54, 67.3203, 1312.44, 790.406, 960.023, 96, 800, 793.75, 800, 576, 738, 96, 544, 576)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(6, 3, 5, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(11, 10, 12, 13), PackedInt32Array(14, 11, 13, 7), PackedInt32Array(7, 13, 15, 6)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(8, 10, 1382, 3, 1376, 854, -5, 863)])
+agent_radius = 64.0
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0hoc2"]
 

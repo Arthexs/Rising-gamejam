@@ -4,6 +4,10 @@
 [ext_resource type="Script" uid="uid://cnjbh0gl5gaah" path="res://Scenes/Map/room.gd" id="2_86k80"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_w5cvx"]
+vertices = PackedVector2Array(768, 512, 795.633, 512, 799.07, 629.961, 512, 625.492, 512, 608, 627.492, 82.2188, 640, 81.7031, 640, 96, 636.68, 211.75, 787.367, 229.148, 790.031, 320, 768, 320, 93.3594, 618.961, 90.5469, 512, 96, 512, 320, 608, 320, 622.492, 96, 320, 85.5, 320, 82.7031, 213.758, 320, 212.891, 320, 224, 818.461, 149.07, 864, 148.102, 864, 217.617, 512, 224, 512, 212.188, 805.023, 96)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(9, 10, 11, 8), PackedInt32Array(12, 13, 14, 15, 16), PackedInt32Array(17, 18, 19, 20, 21), PackedInt32Array(22, 23, 24, 9, 8), PackedInt32Array(25, 26, 8), PackedInt32Array(8, 7, 27, 22), PackedInt32Array(25, 8, 11, 0, 4, 15), PackedInt32Array(21, 25, 15, 14, 17)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(17, 150, 31, 682, 865, 695, 853, 284, 966, 267, 962, 82, 868, 84, 849, 9, 559, 21, 568, 148)])
+agent_radius = 64.0
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0hoc2"]
 

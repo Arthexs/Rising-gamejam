@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bf0evnpnagmqy"]
+[gd_scene load_steps=6 format=3 uid="uid://bf0evnpnagmqy"]
 
 [ext_resource type="Script" uid="uid://b827sps03we5e" path="res://Scenes/Main/main.gd" id="1_1r6ip"]
+[ext_resource type="PackedScene" uid="uid://bo358una2qcdx" path="res://Scenes/Mobs/ranged_mob.tscn" id="2_p6jpk"]
 [ext_resource type="PackedScene" uid="uid://dyt4v8eus8pq1" path="res://Scenes/Player/player.tscn" id="2_qw60k"]
 [ext_resource type="PackedScene" uid="uid://mdyfi8kuwke7" path="res://Scenes/Camera/player_camera.tscn" id="3_5yls4"]
 [ext_resource type="PackedScene" uid="uid://djwlxf205tx6g" path="res://Scenes/Map/main_tile_map_layer.tscn" id="4_5yls4"]
@@ -12,6 +13,10 @@ script = ExtResource("1_1r6ip")
 tracking_object = NodePath("../Player")
 
 [node name="MainTileMapLayer" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_5yls4")]
+player = NodePath("../Player")
+
+[node name="RangedMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_p6jpk")]
+position = Vector2(193, 455)
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_qw60k")]
