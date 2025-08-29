@@ -106,7 +106,13 @@ func apply_movement(direction: Vector2) -> void:
 		print("flying")
 		return
 	
-	if direction.dot(linear_velocity) < 0:
-		apply_central_force(direction * movement_force*1.5)
+	var comp_dir: Vector2
+	# Negative rejection
+	comp_dir = -(linear_velocity - linear_velocity.dot(direction) * direction) * mass * 5
+	# Target force (compensate when going in the wrong direction)
+	if linear_velocity.dot(direction) < 0:
+		comp_dir += direction * movement_force * 7.5
 	else:
-		apply_central_force(direction * movement_force)
+		comp_dir += direction * movement_force
+	
+	apply_central_force(comp_dir)

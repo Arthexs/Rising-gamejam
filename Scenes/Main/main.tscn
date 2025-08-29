@@ -24,10 +24,5 @@ player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_qw60k")]
 
-[node name="meleeMob" parent="." node_paths=PackedStringArray("playerchar") instance=ExtResource("5_p6jpk")]
-position = Vector2(417, 268)
-lock_rotation = true
-playerchar = NodePath("../Player")
-
 [connection signal="change_room" from="MainTileMapLayer" to="PlayerCamera" method="limit_to_room"]
 [connection signal="hurtbox_hit" from="Player" to="MainTileMapLayer" method="_on_player_hurtbox_hit"]
