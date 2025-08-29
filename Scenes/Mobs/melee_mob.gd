@@ -63,7 +63,7 @@ func handle_damage(delta: float) -> void:
 	var force: float = abs(delta_vel)/delta * mass_max
 	#print("force: ", force)
 	if force > force_threshold:
-		var damage: float = force/100000 * damage_tuner
+		var damage: float = force/25000 * damage_tuner
 		#print("damage taken: ", damage)
 		health_module.take_damage(damage)
 		mass = 0.1*mass_max
@@ -73,7 +73,7 @@ func handle_damage(delta: float) -> void:
 	if prev_velocity.length() != 0:
 		#print(delta_vel/prev_velocity.length(), " < ", - (1-brake_threshold))
 		if delta_vel/prev_velocity.length() < - (1-brake_threshold) && flying:
-			var damage: float = force/100000 * damage_tuner
+			var damage: float = force/25000 * damage_tuner
 			#print("damage taken: ", damage)
 			health_module.take_damage(damage)
 			linear_velocity = Vector2.ZERO
