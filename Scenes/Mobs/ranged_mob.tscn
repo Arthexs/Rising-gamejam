@@ -32,6 +32,8 @@ texture = ExtResource("2_tmhk6")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
 [node name="HealthModule" parent="." node_paths=PackedStringArray("box") instance=ExtResource("3_tmhk6")]
+offset_right = 138.0
+offset_bottom = 9.0
 box = NodePath("../CollisionShape2D")
 
 [node name="ShootingTimer" type="Timer" parent="."]
