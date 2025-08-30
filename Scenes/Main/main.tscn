@@ -23,6 +23,7 @@ mass = 30.0
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_qw60k")]
+position = Vector2(129, 83)
 
 [node name="meleeMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_p6jpk")]
 position = Vector2(417, 268)

@@ -5,6 +5,7 @@ class_name RoomsManager
 @export var player: Player
 @export var mob_scene: PackedScene
 @export var rocks: CPUParticles2D
+@export var min_spawn_distance: float = 160
 
 var spawnable_rooms: Array[Room]
 
@@ -83,7 +84,10 @@ func get_matching_connection_index(connection: Vector4i, i_room: int) -> int:
 	return -1
 
 func entering_room(connection: Vector4i) -> void:
-	call_deferred("spawn_mobs", 2)
+	var mob_max: int = Globals.difficulty
+	var mob_count = randi()%(mob_max - Globals.minimum_mobs_in_room) + Globals.minimum_mobs_in_room
+	
+	call_deferred("spawn_mobs", mob_count)
 	var directions: Array[Vector2] = [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]
 	player.apply_velocity(directions[connection.z] * Globals.door_velocity, false)
 	do_screenshake.emit(70.0, 0.3)
@@ -96,14 +100,30 @@ func entering_room(connection: Vector4i) -> void:
 	print("apply velocity")
 	# start entering animation and stuff
 
-func spawn_mobs(difficulty: int) -> void:
+func spawn_mobs(count: int) -> void:
 	var activeTiles: Array[Vector2i] = active_room.tilemap.get_used_cells()
 	var selectedTiles: Array[Vector2i]
-	for i: int in range(difficulty):
+	
+	var spawned_count: int = 0
+	while spawned_count < count:
 		var i_tile: int = randi() % activeTiles.size()
 		var cell_pos: Vector2i = activeTiles[i_tile]
 		var pos: Vector2 = (active_room.offset + cell_pos) * Globals.tile_size
-		var mob: MeleeMob = mob_scene.instantiate()
+		
+		if (pos-player.global_position).length() < min_spawn_distance:
+			continue
+		
+		var cell: TileData = active_room.tilemap.get_cell_tile_data(cell_pos)
+		if (cell.get_custom_data("Spawnable") != null):
+			if (cell.get_custom_data("Spawnable") as bool) == false:
+				continue
+		
+		var mob_name: String = Globals.pick_weighted_random(Globals.mob_spawn_rates)
+		var mob_scene: PackedScene = Globals.mob_scenes[mob_name]
+		
+		var mob: RigidBody2D = mob_scene.instantiate()
+		print("spawned ", mob.name)
 		mob.global_position = pos
 		mob.player = player
 		add_child(mob)
+		spawned_count += 1

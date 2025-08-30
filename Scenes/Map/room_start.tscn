@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://cnjbh0gl5gaah" path="res://Scenes/Map/room.gd" id="2_eh42m"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6krgi"]
-vertices = PackedVector2Array(288, 797.078, 59.9766, 798.57, 71.0313, 73.6797, 288, 480, 542, 71.2734, 542, 97.5, 544, 480, 738, 97.5, 960.008, 69.1406, 1317.54, 67.3203, 1312.44, 790.406, 960.023, 96, 800, 793.75, 800, 576, 738, 96, 544, 576)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(6, 3, 5, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(11, 10, 12, 13), PackedInt32Array(14, 11, 13, 7), PackedInt32Array(7, 13, 15, 6)])
+vertices = PackedVector2Array(320, 828.867, 27.4922, 830.781, 39.5234, 41.8438, 320, 512, 574, 39.1094, 574, 65.5, 512, 512, 928, 37.2969, 1349.77, 35.1563, 1344.22, 822.203, 928.008, 64, 512, 827.633, 512, 800, 768, 800, 768, 608, 706, 64, 706, 65.5, 512, 608)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5, 6), PackedInt32Array(7, 8, 9, 10), PackedInt32Array(9, 11, 12, 13), PackedInt32Array(10, 9, 13, 14), PackedInt32Array(15, 10, 14, 16), PackedInt32Array(16, 14, 17, 6, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(8, 10, 1382, 3, 1376, 854, -5, 863)])
-agent_radius = 64.0
+agent_radius = 32.0
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0hoc2"]
 
@@ -20,6 +20,7 @@ texture_region_size = Vector2i(32, 32)
 3:0/0/physics_layer_1/polygon_0/points = PackedVector2Array(-18, -17.5, 18, -17.5, 18, 17.5, -18, 17.5)
 3:0/0/custom_data_0 = true
 4:0/0 = 0
+4:0/0/custom_data_1 = true
 5:0/0 = 0
 6:0/0 = 0
 6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
@@ -34,6 +35,8 @@ physics_layer_1/collision_mask = 4
 physics_layer_1/collision_priority = 2.0
 custom_data_layer_0/name = "Door"
 custom_data_layer_0/type = 1
+custom_data_layer_1/name = "Spawnable"
+custom_data_layer_1/type = 1
 sources/0 = SubResource("TileSetAtlasSource_0hoc2")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" node_paths=PackedStringArray("tilemap")]
