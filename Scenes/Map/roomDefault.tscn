@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://df7bvldfakwf0"]
+
+[ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="1_hb0rq"]
+[ext_resource type="TileSet" uid="uid://dii4bme53hxom" path="res://Scenes/Map/flooring.tres" id="2_hb0rq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1dsc3"]
+texture = ExtResource("1_hb0rq")
+texture_region_size = Vector2i(32, 32)
+8:8/0 = 0
+8:9/0 = 0
+9:9/0 = 0
+9:8/0 = 0
+10:4/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+11:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_1dsc3"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_1dsc3")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kr2p5"]
+texture = ExtResource("1_hb0rq")
+texture_region_size = Vector2i(64, 64)
+5:2/0 = 0
+4:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_kr2p5"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_kr2p5")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Floor" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_1dsc3")
+
+[node name="Walls" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_set = ExtResource("2_hb0rq")
+
+[node name="Items" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_kr2p5")
