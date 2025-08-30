@@ -2,8 +2,8 @@ extends RigidBody2D
 
 class_name RangedMob
 
-@export var preferred_distance: float = 500.0 # sweet spot distance
-@export var tolerance: float = 50.0           # +/- range around preferred_distance
+@export var preferred_distance: float = 150.0 # sweet spot distance
+@export var tolerance: float = 25.0           # +/- range around preferred_distance
 #@export var speed: float = 200.0
 @export var agent: NavigationAgent2D
 @export var player: Player
@@ -16,8 +16,9 @@ var movement_force = acceleration * mass * 32 # px/m
 @export var damage_tuner: float = 1.0
 
 @export var projectile_scene: PackedScene
-@export var shoot_interval: float = 1.5
-@export var projectile_speed: float = 600.0
+@export var shoot_interval: float = 0.1
+@export var projectile_speed: float = 1000.0
+@export var projectile_damage: float = 1.0
 
 signal death()
 
@@ -72,6 +73,7 @@ func _physics_process(delta: float) -> void:
 		apply_friction()
 	
 	prev_velocity = linear_velocity
+	try_attack()
 	
 func handle_damage(delta: float) -> void:
 	var delta_vel: float = linear_velocity.length() - prev_velocity.length()
@@ -103,7 +105,6 @@ func handle_damage(delta: float) -> void:
 
 func try_attack():
 	if player_in_range and shooting_timer.is_stopped():
-		print("Trying to attack")
 		shoot_projectile()
 		shooting_timer.start()
 
@@ -151,10 +152,8 @@ func shoot_projectile():
 	projectile.rotation = dir.angle()
 
 	# Apply velocity if available
-	if projectile.has_method("set_velocity"):
-		projectile.set_velocity(dir * projectile_speed)
-	elif projectile.has_variable("linear_velocity"):
-		projectile.linear_velocity = dir * projectile_speed
+	projectile.linear_velocity = dir * projectile_speed
+	projectile.damage = projectile_damage
 
 	get_parent().add_child(projectile)
 

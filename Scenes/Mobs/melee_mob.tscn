@@ -38,6 +38,8 @@ shape = SubResource("RectangleShape2D_dqgl2")
 [node name="AttackTimer" type="Timer" parent="."]
 
 [node name="HealthModule" parent="." node_paths=PackedStringArray("box") instance=ExtResource("3_ljmiq")]
+offset_right = 138.0
+offset_bottom = 9.0
 box = NodePath("../CollisionShape2D")
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
