@@ -7,8 +7,8 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dqgl2"]
 rough = true
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xsotj"]
-size = Vector2(32, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ljmiq"]
+radius = 16.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dqgl2"]
 size = Vector2(40, 40)
@@ -26,7 +26,7 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_ljmiq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_xsotj")
+shape = SubResource("CircleShape2D_ljmiq")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
