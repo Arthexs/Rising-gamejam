@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bf0evnpnagmqy"]
+[gd_scene load_steps=10 format=3 uid="uid://bf0evnpnagmqy"]
 
 [ext_resource type="Script" uid="uid://b827sps03we5e" path="res://Scenes/Main/main.gd" id="1_1r6ip"]
 [ext_resource type="PackedScene" uid="uid://bo358una2qcdx" path="res://Scenes/Mobs/ranged_mob.tscn" id="2_p6jpk"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://djwlxf205tx6g" path="res://Scenes/Map/main_tile_map_layer.tscn" id="4_5yls4"]
 [ext_resource type="PackedScene" uid="uid://c77rs567yitg2" path="res://Scenes/Mobs/melee_mob.tscn" id="5_p6jpk"]
 [ext_resource type="PackedScene" uid="uid://2hfgbvgo20vm" path="res://Scenes/Items/item.tscn" id="5_xlvfx"]
+[ext_resource type="Script" uid="uid://dimyamu77iil1" path="res://Scenes/Main/HUD.gd" id="8_hryqi"]
+[ext_resource type="PackedScene" uid="uid://p3kj4wwphiv8" path="res://Scenes/HUD/pop-up-label.tscn" id="9_imbg2"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1r6ip")
@@ -19,7 +21,7 @@ player = NodePath("../Player")
 mob_scene = ExtResource("5_p6jpk")
 
 [node name="Item" parent="." instance=ExtResource("5_xlvfx")]
-position = Vector2(123, 192)
+position = Vector2(61, 98)
 
 [node name="RangedMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_p6jpk")]
 position = Vector2(347, 81)
@@ -33,6 +35,17 @@ position = Vector2(417, 268)
 mass = 30.0
 lock_rotation = true
 player = NodePath("../Player")
+
+[node name="CanvasGroup" type="CanvasGroup" parent="."]
+
+[node name="Popup_manager" type="Control" parent="CanvasGroup"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("8_hryqi")
+popup_packed_scene = ExtResource("9_imbg2")
 
 [connection signal="change_room" from="MainTileMapLayer" to="PlayerCamera" method="limit_to_room"]
 [connection signal="do_screenshake" from="MainTileMapLayer" to="PlayerCamera" method="shake_cam"]

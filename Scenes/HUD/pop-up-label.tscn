@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://p3kj4wwphiv8"]
+
+[ext_resource type="FontFile" uid="uid://tqsi6g8j2pre" path="res://Assets/Fonts/arcadeclassic/ARCADECLASSIC.TTF" id="1_lxper"]
+
+[node name="Label" type="Label"]
+modulate = Color(1, 1, 1, 0)
+offset_right = 515.0
+offset_bottom = 525.0
+scale = Vector2(0.25, 0.25)
+theme_override_fonts/font = ExtResource("1_lxper")
+theme_override_font_sizes/font_size = 40
+text = "AAAAAAAAAAAIAAAAAAAAAAA"
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 3

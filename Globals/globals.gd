@@ -5,6 +5,14 @@ extends Node
 @export var melee1_packed_scene: PackedScene = preload("res://Scenes/Mobs/melee_mob.tscn") as PackedScene
 @export var ranged1_packed_scene: PackedScene = preload("res://Scenes/Mobs/ranged_mob.tscn") as PackedScene
 
+var popup_manager: PopupManager
+
+func _ready() -> void:
+	for node: Node in get_tree().root.get_children():
+		if node.name == "Main":
+			popup_manager = node.find_child("Popup_manager")
+	print(popup_manager.name)
+
 enum directions {UP, RIGHT, DOWN, LEFT}
 
 const tile_size: float = 32.0

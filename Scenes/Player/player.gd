@@ -3,6 +3,7 @@ class_name Player
 
 @export var speed = 100 # How fast the player will move (pixels/sec).
 @export var hurtbox: Area2D
+@export var collision_box: CollisionShape2D 
 @export var health_module: HealthModule
 
 var applied_velocity: Vector2 = Vector2.ZERO
@@ -87,11 +88,35 @@ func handle_items() -> void:
 	var areas_overlapping: Array[Area2D] = hurtbox.get_overlapping_areas()
 	var closest_item: BaseItem = BaseItem.new()
 	closest_item.cost = -1
+	var closest_item_distance: float = INF
+	
+	var player_center: Vector2 = collision_box.shape.get_rect().position + collision_box.shape.get_rect().size/2
+	
 	for area: Area2D in areas_overlapping:
 		var collider_root: Node2D = area.owner
 		if not collider_root is BaseItem:
 			continue
 		
 		var item: BaseItem = collider_root as BaseItem
+		#print(d)
 		
-		
+		var item_pos: Vector2 = item.interaction_range.shape.get_rect().size/2 + item.interaction_range.global_position
+		var item_dist: float = (item_pos-player_center).length()
+		if item_dist < closest_item_distance:
+			closest_item_distance = item_dist
+			closest_item = item
+		else:
+			item.remove_label()
+			# Maybe delete closest_item if cost -1 if it is not automatically deleted
+	
+	if closest_item.cost != -1:
+		closest_item.make_label()
+
+func _on_hitbox_area_exited(area: Area2D) -> void:
+	var collider_root: Node2D = area.owner
+	if not collider_root is BaseItem:
+		return
+	
+	#print("removing label")
+	var item: BaseItem = collider_root as BaseItem
+	item.remove_label()
