@@ -1,7 +1,12 @@
-[gd_scene load_steps=7 format=4 uid="uid://52jllcbt3x20"]
+[gd_scene load_steps=8 format=4 uid="uid://52jllcbt3x20"]
 
 [ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="1_6rj1a"]
 [ext_resource type="TileSet" uid="uid://dii4bme53hxom" path="res://Scenes/Map/flooring.tres" id="2_6rj1a"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_6rj1a"]
+vertices = PackedVector2Array(950, 781.203, 950, 886, 886, 886, 650, 842, 946.797, 781.203, 946.797, 690.797, 650, 630, 886, 586, 525.203, 269.203, 525.203, 266, 630, 266, 630, 330, 586, 566, 758, 330, 758, 394, 586, 630, 822, 394, 822, 458, 886, 458, 950, 586, 950, 690.797, 138, 458, 202, 394, 330, 330, 374, 566, 374, 630, 310, 630, 74, 586, 202, 1078, 138, 1014, 74, 886, 310, 842, 374, 842, 374, 906, 330, 1142, 586, 906, 586, 842, 822, 1014, 758, 1078, 630, 1142, 886, 1014, 822, 1078, 758, 1142, 630, 1206, 557.203, 1206, 557.203, 1202.8, 466.797, 1202.8, 466.797, 1206, 330, 1206, 202, 1142, 138, 1078, 74, 1014, 10, 886, 10, 781.203, 13.2031, 781.203, 13.2031, 690.797, 10, 690.797, 10, 586, 74, 458, 138, 394, 202, 330, 330, 266, 434.797, 266, 434.797, 269.203)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 4, 3, 6, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(12, 11, 13, 14, 6, 15), PackedInt32Array(14, 16, 17, 6), PackedInt32Array(17, 18, 7, 6), PackedInt32Array(7, 19, 20, 5), PackedInt32Array(21, 22, 23, 24, 25, 26, 27), PackedInt32Array(28, 29, 30, 31, 32, 33, 34), PackedInt32Array(35, 36, 3, 2, 37, 38, 39), PackedInt32Array(2, 40, 37), PackedInt32Array(37, 41, 38), PackedInt32Array(38, 42, 39), PackedInt32Array(39, 43, 44, 45), PackedInt32Array(46, 47, 48, 34), PackedInt32Array(34, 49, 28), PackedInt32Array(28, 50, 29), PackedInt32Array(29, 51, 30), PackedInt32Array(30, 52, 53, 54, 31), PackedInt32Array(55, 56, 57, 27), PackedInt32Array(27, 58, 21), PackedInt32Array(21, 59, 22), PackedInt32Array(22, 60, 23), PackedInt32Array(23, 61, 62, 63, 24), PackedInt32Array(8, 11, 12, 24, 63), PackedInt32Array(55, 27, 26, 31, 54), PackedInt32Array(46, 34, 33, 35, 39, 45)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(315, 219, 649, 218, 652, 275, 776, 281, 785, 343, 835, 345, 845, 402, 903, 412, 909, 530, 975, 541, 975, 673.604, 554, 599, 404, 607, 403, 659, 342, 678, 338, 791, 408, 804, 410, 852, 556, 857, 552, 803, 619, 788, 617, 667, 554, 666, 554, 599, 977, 673, 975, 901, 914, 912, 912, 1038, 849, 1046, 846, 1096, 786, 1111, 781, 1164, 654, 1173, 649, 1235, 306, 1230, 302, 1171, 162, 1168, 176, 1110, 117, 1099, 115, 1037, 52, 1030, 53, 911, -17, 906, -11, 540, 47, 531, 54, 410, 107, 409, 117, 339, 176, 348, 179, 280, 299, 280)])
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xplmk"]
 texture = ExtResource("1_6rj1a")
@@ -32,7 +37,8 @@ custom_data_layer_0/name = "Spawnable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_c32jd")
 
-[node name="Node2D" type="Node2D"]
+[node name="NavigationRegion2D" type="NavigationRegion2D"]
+navigation_polygon = SubResource("NavigationPolygon_6rj1a")
 
 [node name="Floor32" type="TileMapLayer" parent="."]
 texture_filter = 1

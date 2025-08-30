@@ -1,7 +1,12 @@
-[gd_scene load_steps=7 format=4 uid="uid://d00w18aw5wwxm"]
+[gd_scene load_steps=8 format=4 uid="uid://d00w18aw5wwxm"]
 
 [ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="1_v1m8i"]
 [ext_resource type="TileSet" uid="uid://dii4bme53hxom" path="res://Scenes/Map/flooring.tres" id="2_v1m8i"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_v1m8i"]
+vertices = PackedVector2Array(397.203, -50.7969, 397.203, -54, 438, -54, 438, 10, 694, 714, 950, 714, 950, 754.797, 946.797, 754.797, 946.797, 845.203, 950, 845.203, 950, 950, 502, 950, 502, 1014, 493.203, 1014, 493.203, 1010.8, 402.797, 1010.8, 402.797, 1014, 394, 1014, 394, 906, 458, 906, 458, 586, 522, 586, 310, 330, 438, 330, 438, 502, 138, 502, 141.203, 461.203, 138, 461.203, 141.203, 370.797, 202, 330, 138, 370.797, 138, 330, 310, 182, 202, 74, 266, 74, 266, -54, 306.797, -54, 306.797, -50.7969, 694, 10, 522, 182)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(11, 12, 13, 14), PackedInt32Array(15, 16, 17, 18), PackedInt32Array(14, 15, 18, 19, 11), PackedInt32Array(19, 20, 21, 4, 11), PackedInt32Array(22, 23, 24, 25, 26), PackedInt32Array(25, 27, 26), PackedInt32Array(22, 26, 28, 29), PackedInt32Array(28, 30, 31, 29), PackedInt32Array(32, 22, 29, 33, 34), PackedInt32Array(34, 35, 36, 37), PackedInt32Array(4, 7, 8, 11), PackedInt32Array(38, 4, 21, 39), PackedInt32Array(3, 38, 39, 32, 34), PackedInt32Array(3, 34, 37, 0)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(375, 1042, 533, 1040, 529, 983, 973, 980, 973, 664, 715, 666, 716, -39, 462, -38, 463, -104, 238, -100, 244, 22, 171, 24, 175, 276, 117, 282, 115, 523, 463, 526, 458, 274, 338, 280, 336, 211, 500, 210, 500, 536, 436, 535, 437, 850, 370, 853)])
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1og81"]
 texture = ExtResource("1_v1m8i")
@@ -36,7 +41,8 @@ custom_data_layer_0/name = "Spawnable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_3l4nv")
 
-[node name="Node2D" type="Node2D"]
+[node name="NavigationRegion2D" type="NavigationRegion2D"]
+navigation_polygon = SubResource("NavigationPolygon_v1m8i")
 
 [node name="32Floor" type="TileMapLayer" parent="."]
 texture_filter = 1

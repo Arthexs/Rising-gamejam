@@ -1,7 +1,12 @@
-[gd_scene load_steps=7 format=4 uid="uid://c2qwcfgkb5ixy"]
+[gd_scene load_steps=8 format=4 uid="uid://c2qwcfgkb5ixy"]
 
 [ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="1_ug56i"]
 [ext_resource type="TileSet" uid="uid://dii4bme53hxom" path="res://Scenes/Map/flooring.tres" id="2_ug56i"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ug56i"]
+vertices = PackedVector2Array(1034, -438, 1718, -438, 1718, 118, 1398, 118, 1034, -374, 1930, 266, 1930, 202, 2294, 202, 2294, 630, 1930, 630, 1930, 438, 1398, 266, 1398, 438, 1398, 522, 1462, 522, 1462, 950, 1398, 950, 1398, 1290, 1462, 1290, 1462, 1654, 970, 1654, 970, 1590, 906, 1590, 906, 1549.2, 909.203, 1549.2, 909.203, 1458.8, 906, 1458.8, 906, 1418, 970, 1418, 970, 1290, 1226, 1290, 1226, 950, 1034, 950, 1034, 522, 1226, 522, 1226, 118, 1034, 118, 1034, -202, 906, -202, 906, -242.797, 909.203, -242.797, 909.203, -333.203, 906, -333.203, 906, -374)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(8, 9, 10), PackedInt32Array(5, 8, 10), PackedInt32Array(11, 5, 10, 12), PackedInt32Array(13, 14, 15, 16), PackedInt32Array(17, 18, 19, 20, 21), PackedInt32Array(21, 22, 23, 24), PackedInt32Array(25, 26, 27, 28), PackedInt32Array(28, 29, 30), PackedInt32Array(31, 32, 33, 34), PackedInt32Array(35, 36, 37), PackedInt32Array(37, 38, 39, 40), PackedInt32Array(41, 42, 43, 4), PackedInt32Array(37, 40, 41, 4), PackedInt32Array(35, 37, 4, 3, 11), PackedInt32Array(34, 35, 11, 12), PackedInt32Array(34, 12, 13), PackedInt32Array(34, 13, 16, 31), PackedInt32Array(31, 16, 17, 30), PackedInt32Array(28, 30, 17, 21, 24, 25)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(889, -426, 1001, -426, 1018.37, -494.277, 1754, -491, 1746, 140, 1428, 153, 1432, 210, 1898, 210, 1892, 153, 2334, 141, 2337, 669, 1892, 676, 1878, 496, 1498, 473, 1509, 952, 1436, 995, 1434, 1237, 1507.5, 1238.59, 1505, 1715, 949, 1683, 943, 1618, 888, 1608, 861, 1546, 860, 1438, 887, 1373, 949, 1372, 949, 1244, 1193, 1246, 1186, 985, 998, 1000, 998, 465, 1195, 472, 1188, 168, 1001, 168, 1001, -153, 846, -167, 852.19, -370.017)])
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vr4hr"]
 texture = ExtResource("1_ug56i")
@@ -32,7 +37,8 @@ custom_data_layer_0/name = "Spawnable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_tlhdc")
 
-[node name="Node2D" type="Node2D"]
+[node name="NavigationRegion2D" type="NavigationRegion2D"]
+navigation_polygon = SubResource("NavigationPolygon_ug56i")
 
 [node name="Floor32" type="TileMapLayer" parent="."]
 texture_filter = 1
