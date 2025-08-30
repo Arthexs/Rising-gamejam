@@ -72,7 +72,7 @@ func _physics_process(delta: float) -> void:
 		apply_friction()
 	
 	prev_velocity = linear_velocity
-	
+
 func handle_damage(delta: float) -> void:
 	var delta_vel: float = linear_velocity.length() - prev_velocity.length()
 	

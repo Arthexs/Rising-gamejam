@@ -50,6 +50,8 @@ func _physics_process(delta: float):
 		move_and_slide()
 	else:
 		global_position += velocity * delta
+	
+	handle_items()
 	#queue_redraw()  # Forces redraw every frame
 
 func apply_velocity(v: Vector2, hitable: bool) -> void:
@@ -80,3 +82,16 @@ func take_damage(damage: float) -> void:
 
 func _on_hurt_box_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	hurtbox_hit.emit(body_rid, body, body_shape_index, local_shape_index)
+
+func handle_items() -> void:
+	var areas_overlapping: Array[Area2D] = hurtbox.get_overlapping_areas()
+	var closest_item: BaseItem = BaseItem.new()
+	closest_item.cost = -1
+	for area: Area2D in areas_overlapping:
+		var collider_root: Node2D = area.owner
+		if not collider_root is BaseItem:
+			continue
+		
+		var item: BaseItem = collider_root as BaseItem
+		
+		
