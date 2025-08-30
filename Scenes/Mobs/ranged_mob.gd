@@ -1,9 +1,11 @@
 extends RigidBody2D
 
-var movement_speed: float = 200.0
-var movement_target_position: Vector2 = Vector2(60.0,180.0)
+class_name RangedMob
 
-@export var nav_agent: NavigationAgent2D
+@export var preferred_distance: float = 500.0 # sweet spot distance
+@export var tolerance: float = 50.0           # +/- range around preferred_distance
+@export var speed: float = 200.0
+@export var agent: NavigationAgent2D
 @export var player: Player
 @export var acceleration: float = 0.6
 @export var friction_coefficient: float = 25 # px/m/s
@@ -12,39 +14,70 @@ var movement_force = acceleration * mass * 32 # px/m
 @export var force_threshold: float = 170000 # force threshold to be send flying
 @export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
 @export var damage_tuner: float = 1.0
+@export var friction_coefficient: float = 50 # px/m/s
+@export var acceleration: float = 3.0
+var movement_force = acceleration * mass * 32 # px/m
 
-var mass_max: float
-var flying: bool = false
+@export var projectile_scene: PackedScene
+@export var shoot_interval: float = 1.5
+@export var projectile_speed: float = 600.0
 
-var prev_velocity: Vector2 = Vector2.ZERO
+signal death()
+
+var speed_scalar: float = 200.0
+var player_in_range: Player = null
 
 var health_module: HealthModule
+var prev_velocity: Vector2 = Vector2.ZERO
+var mass_max: float = mass
+var flying: bool = false
 
-func _ready():
-	# These values need to be adjusted for the actor's speed
-	# and the navigation layout.
+@onready var shooting_timer = $ShootingTimer
+@onready var shooting_area = $ShootingArea
+@onready var collision_shape = $ShootingArea/CollisionShape2D
+#@export var force_threshold: float = 300000 # force threshold to be send flying
+#@export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
+#@export var damage_tuner: float = 1.0
+
+func _ready() -> void:
 	mass_max = mass
-	
 	health_module = get_node("HealthModule")
-	nav_agent.target_desired_distance = 10.0
-	contact_monitor = true
-	max_contacts_reported = 8
+	
+	agent.target_desired_distance = 10
+	set_target(player.global_position)
+	
+	shooting_timer.wait_time = shoot_interval
+	shooting_timer.one_shot = true
+	
+	shooting_area.body_entered.connect(_on_shooting_area_area_entered)
+	shooting_area.body_exited.connect(_on_shooting_area_area_exited)
+	
+	var shape = collision_shape.shape
+	if shape is CircleShape2D:
+		shape.radius = preferred_distance + tolerance
 
-func set_target(target: Vector2):
-	nav_agent.target_position = target
-	nav_agent.get_next_path_position()
+func set_target(target_position: Vector2):
+	agent.target_position = target_position
+	agent.get_next_path_position()
 
 func _physics_process(delta: float) -> void:
-	handle_damage(delta)
+	var to_player: Vector2 = player.global_position - global_position
+	var distance = to_player.length()
+	var direction: Vector2 = to_player.normalized()
 	
-	set_target(player.global_position)
-	if not nav_agent.is_target_reached():
-		var direction: Vector2 = (nav_agent.get_next_path_position() - global_position).normalized()
+	# Decide behavior based on distance
+	if distance > preferred_distance + tolerance:
+		# Too far → move closer
 		apply_movement(direction)
+	elif distance < preferred_distance - tolerance:
+		# Too close → move away
+		apply_movement(-direction)
+	else:
+		# In range → apply friction so it stops
+		apply_friction()
 	
-	apply_friction()
 	prev_velocity = linear_velocity
-
+	
 func handle_damage(delta: float) -> void:
 	var delta_vel: float = linear_velocity.length() - prev_velocity.length()
 	
@@ -67,38 +100,32 @@ func handle_damage(delta: float) -> void:
 			linear_velocity = Vector2.ZERO
 			mass = mass_max
 			flying = false
-			#apply_impulse(applied_impulse * 1.0, state.get_contact_collider_position(i))
-			#collider.apply_impulse(-applied_impulse, state.get_contact_collider_position(i))
-			#print("apply impulse")
+	
+	prev_velocity = linear_velocity
 
-#func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	#var applied_impulse: Vector2 = Vector2.ZERO
-	#for i: int in range(get_contact_count()):
-		#applied_impulse += state.get_contact_impulse(i)
-		##print(i)
-		#var collider: Node2D = state.get_contact_collider_object(i) as Node2D
-		##var collider_rid: RID = state.get_contact_collider(i)
-		#if collider is TileMapLayer:
-			#pass
-			##print("collided with wall")
-		#
-		#if collider is Hammer:
-			#pass
-			##print("collided with hammer")
-		#
-		#if collider.is_in_group("enemies"):
-			#pass
-			##print("collided with enemy")
-		#
+
+func try_attack():
+	if player_in_range and shooting_timer.is_stopped():
+		print("Trying to attack")
+		shoot_projectile()
+		shooting_timer.start()
+
+func _on_attack_timer_timeout() -> void:
+	try_attack()
+
+func died() -> void:
+	death.emit()
 
 func apply_friction() -> void:
-	#print(linear_velocity.length(), "/", max_vel)
-	if flying:
-		#flying = false
-		apply_central_force(-linear_velocity.normalized() * friction_coefficient*0.1)
-	else:
+	if linear_velocity.length() > 0:
 		apply_central_force(-linear_velocity.normalized() * friction_coefficient)
-		#flying = true
+	#print(linear_velocity.length(), "/", max_vel)
+	#if flying:
+		##flying = false
+		#apply_central_force(-linear_velocity.normalized() * friction_coefficient*0.1)
+	#else:
+		#apply_central_force(-linear_velocity.normalized() * friction_coefficient)
+		##flying = true
 
 func apply_movement(direction: Vector2) -> void:
 	if flying:
@@ -115,3 +142,31 @@ func apply_movement(direction: Vector2) -> void:
 		comp_dir += direction * movement_force
 	
 	apply_central_force(comp_dir)
+
+func shoot_projectile():
+	if not projectile_scene or not player_in_range:
+		return
+
+	var dir = (player_in_range.global_position - global_position).normalized()
+	var projectile = projectile_scene.instantiate()
+	
+	projectile.global_position = global_position
+	projectile.rotation = dir.angle()
+
+	# Apply velocity if available
+	if projectile.has_method("set_velocity"):
+		projectile.set_velocity(dir * projectile_speed)
+	elif projectile.has_variable("linear_velocity"):
+		projectile.linear_velocity = dir * projectile_speed
+
+	get_parent().add_child(projectile)
+
+func _on_shooting_area_area_entered(body) -> void:
+	if body is Player:
+		player_in_range = body
+		try_attack()
+
+
+func _on_shooting_area_area_exited(body) -> void:
+	if body == player_in_range:
+		player_in_range = null
