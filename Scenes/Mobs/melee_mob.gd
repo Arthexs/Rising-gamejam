@@ -5,7 +5,7 @@ class_name MeleeMob
 #@export var speed: float = 50.0
 @export var agent: NavigationAgent2D
 @export var player: Player
-@export var damage: float = 10.0
+@export var attack_power: float = 10.0
 @export var attack_interval: float = 1.0
 
 @export var force_threshold: float = 170000 # force threshold to be send flying
@@ -95,7 +95,7 @@ func _on_attack_area_body_exited(body):
 		
 func try_attack():
 	if player_in_range and attack_timer.is_stopped():
-		player_in_range.take_damage(damage)
+		player_in_range.take_damage(attack_power)
 		attack_timer.start()
 
 func _on_attack_timer_timeout() -> void:

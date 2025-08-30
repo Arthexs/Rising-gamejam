@@ -18,8 +18,7 @@ player = NodePath("../Player")
 mob_scene = ExtResource("5_p6jpk")
 
 [node name="RangedMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_p6jpk")]
-position = Vector2(193, 455)
-mass = 30.0
+position = Vector2(347, 81)
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_qw60k")]
@@ -27,6 +26,7 @@ position = Vector2(129, 83)
 
 [node name="meleeMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_p6jpk")]
 position = Vector2(417, 268)
+mass = 30.0
 lock_rotation = true
 player = NodePath("../Player")
 

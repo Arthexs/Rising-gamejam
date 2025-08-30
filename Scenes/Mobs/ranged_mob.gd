@@ -4,19 +4,16 @@ class_name RangedMob
 
 @export var preferred_distance: float = 500.0 # sweet spot distance
 @export var tolerance: float = 50.0           # +/- range around preferred_distance
-@export var speed: float = 200.0
+#@export var speed: float = 200.0
 @export var agent: NavigationAgent2D
 @export var player: Player
 @export var acceleration: float = 0.6
-@export var friction_coefficient: float = 25 # px/m/s
+@export var friction_coefficient: float = 40 # px/m/s
 var movement_force = acceleration * mass * 32 # px/m
 
 @export var force_threshold: float = 170000 # force threshold to be send flying
 @export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
 @export var damage_tuner: float = 1.0
-@export var friction_coefficient: float = 50 # px/m/s
-@export var acceleration: float = 3.0
-var movement_force = acceleration * mass * 32 # px/m
 
 @export var projectile_scene: PackedScene
 @export var shoot_interval: float = 1.5
@@ -24,7 +21,6 @@ var movement_force = acceleration * mass * 32 # px/m
 
 signal death()
 
-var speed_scalar: float = 200.0
 var player_in_range: Player = null
 
 var health_module: HealthModule
@@ -35,9 +31,6 @@ var flying: bool = false
 @onready var shooting_timer = $ShootingTimer
 @onready var shooting_area = $ShootingArea
 @onready var collision_shape = $ShootingArea/CollisionShape2D
-#@export var force_threshold: float = 300000 # force threshold to be send flying
-#@export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
-#@export var damage_tuner: float = 1.0
 
 func _ready() -> void:
 	mass_max = mass
@@ -65,6 +58,8 @@ func _physics_process(delta: float) -> void:
 	var distance = to_player.length()
 	var direction: Vector2 = to_player.normalized()
 	
+	handle_damage(delta)
+	
 	# Decide behavior based on distance
 	if distance > preferred_distance + tolerance:
 		# Too far → move closer
@@ -83,9 +78,11 @@ func handle_damage(delta: float) -> void:
 	
 	var force: float = abs(delta_vel)/delta * mass_max
 	
+	#print("force on ranged: ", force, "/", force_threshold)
+	
 	if force > force_threshold:
 		var damage: float = force/25000 * damage_tuner
-		#print("damage taken: ", damage)
+		#print("damage taken: ", damage, " | ", force/25000, "*", damage_tuner)
 		health_module.take_damage(damage)
 		mass = 0.1*mass_max
 		#apply_central_force(linear_velocity.normalized() * force)
