@@ -10,6 +10,7 @@ class_name RoomsManager
 var spawnable_rooms: Array[Room]
 
 signal do_screenshake(magnitude: float, duration: float)
+signal spawned_mobs(mobs: Array[RigidBody2D])
 
 var active_room: Room
 var previous_room: Room
@@ -85,7 +86,9 @@ func get_matching_connection_index(connection: Vector4i, i_room: int) -> int:
 
 func entering_room(connection: Vector4i) -> void:
 	var mob_max: int = Globals.difficulty
-	var mob_count = randi()%(mob_max - Globals.minimum_mobs_in_room) + Globals.minimum_mobs_in_room
+	var mob_count: int = randi()%(mob_max - Globals.minimum_mobs_in_room) + Globals.minimum_mobs_in_room
+	var size_correction: float = max(1.0, float(active_room.tilemap.get_used_cells().size())/float(Globals.tiles_in_a_room))
+	mob_count = int(size_correction * float(mob_count))
 	
 	call_deferred("spawn_mobs", mob_count)
 	var directions: Array[Vector2] = [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]
@@ -97,12 +100,14 @@ func entering_room(connection: Vector4i) -> void:
 	rocks.restart()
 	rocks.emitting = true
 	
-	print("apply velocity")
+	#print("apply velocity")
 	# start entering animation and stuff
 
 func spawn_mobs(count: int) -> void:
 	var activeTiles: Array[Vector2i] = active_room.tilemap.get_used_cells()
 	var selectedTiles: Array[Vector2i]
+	
+	var added_mobs: Array[CharacterBody2D] = []
 	
 	var spawned_count: int = 0
 	while spawned_count < count:
@@ -125,5 +130,10 @@ func spawn_mobs(count: int) -> void:
 		print("spawned ", mob.name)
 		mob.global_position = pos
 		mob.player = player
-		add_child(mob)
+		active_room.add_child(mob)
+		
+		added_mobs.append(mob)
+		
 		spawned_count += 1
+	
+	spawned_mobs.emit(added_mobs)
