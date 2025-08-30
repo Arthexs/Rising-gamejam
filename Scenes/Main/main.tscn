@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bf0evnpnagmqy"]
+[gd_scene load_steps=8 format=3 uid="uid://bf0evnpnagmqy"]
 
 [ext_resource type="Script" uid="uid://b827sps03we5e" path="res://Scenes/Main/main.gd" id="1_1r6ip"]
 [ext_resource type="PackedScene" uid="uid://bo358una2qcdx" path="res://Scenes/Mobs/ranged_mob.tscn" id="2_p6jpk"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://mdyfi8kuwke7" path="res://Scenes/Camera/player_camera.tscn" id="3_5yls4"]
 [ext_resource type="PackedScene" uid="uid://djwlxf205tx6g" path="res://Scenes/Map/main_tile_map_layer.tscn" id="4_5yls4"]
 [ext_resource type="PackedScene" uid="uid://c77rs567yitg2" path="res://Scenes/Mobs/melee_mob.tscn" id="5_p6jpk"]
+[ext_resource type="PackedScene" uid="uid://2hfgbvgo20vm" path="res://Scenes/Items/item.tscn" id="5_xlvfx"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1r6ip")
@@ -16,6 +17,9 @@ tracking_object = NodePath("../Player")
 [node name="MainTileMapLayer" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_5yls4")]
 player = NodePath("../Player")
 mob_scene = ExtResource("5_p6jpk")
+
+[node name="Item" parent="." instance=ExtResource("5_xlvfx")]
+position = Vector2(123, 192)
 
 [node name="RangedMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_p6jpk")]
 position = Vector2(347, 81)
