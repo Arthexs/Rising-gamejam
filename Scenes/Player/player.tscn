@@ -112,6 +112,8 @@ size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "health_module")]
 position = Vector2(0, -4)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_a3d8c")
 hurtbox = NodePath("Hitbox")
 health_module = NodePath("HealthModule")
@@ -126,6 +128,8 @@ shape = SubResource("RectangleShape2D_a3d8c")
 
 [node name="weapon" type="RigidBody2D" parent="."]
 position = Vector2(8, -8)
+collision_layer = 3
+collision_mask = 3
 mass = 50.0
 physics_material_override = SubResource("PhysicsMaterial_mtuoh")
 gravity_scale = 0.0
