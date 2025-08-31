@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 	handle_damage(delta)
 	
 	set_target(player.global_position)
-	if not agent.is_target_reached() and agent.distance_to_target() < 100:
+	if not agent.is_target_reached() and agent.distance_to_target() < 350:
 		var direction: Vector2 = (agent.get_next_path_position() - global_position).normalized()
 		apply_movement(direction)
 		_animated_sprite.play("move")
