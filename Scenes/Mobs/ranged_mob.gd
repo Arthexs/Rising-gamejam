@@ -16,8 +16,8 @@ var movement_force = acceleration * mass * 32 # px/m
 @export var damage_tuner: float = 1.0
 
 @export var projectile_scene: PackedScene
-@export var shoot_interval: float = 0.1
-@export var projectile_speed: float = 1000.0
+@export var shoot_interval: float = 1000
+@export var projectile_speed: float = 1.0
 @export var projectile_damage: float = 1.0
 
 signal death()

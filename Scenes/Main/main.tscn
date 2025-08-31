@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bf0evnpnagmqy"]
+[gd_scene load_steps=9 format=3 uid="uid://bf0evnpnagmqy"]
 
 [ext_resource type="Script" uid="uid://b827sps03we5e" path="res://Scenes/Main/main.gd" id="1_1r6ip"]
 [ext_resource type="PackedScene" uid="uid://bo358una2qcdx" path="res://Scenes/Mobs/ranged_mob.tscn" id="2_p6jpk"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://djwlxf205tx6g" path="res://Scenes/Map/main_tile_map_layer.tscn" id="4_5yls4"]
 [ext_resource type="PackedScene" uid="uid://c77rs567yitg2" path="res://Scenes/Mobs/melee_mob.tscn" id="5_p6jpk"]
 [ext_resource type="PackedScene" uid="uid://2hfgbvgo20vm" path="res://Scenes/Items/item.tscn" id="5_xlvfx"]
+[ext_resource type="PackedScene" uid="uid://bvaqysdblrjvn" path="res://Scenes/HUD/hud.tscn" id="7_xlvfx"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1r6ip")
@@ -28,8 +29,11 @@ player = NodePath("../Player")
 [node name="Player" parent="." instance=ExtResource("2_qw60k")]
 position = Vector2(129, 83)
 
-[node name="meleeMob" parent="." instance=ExtResource("5_p6jpk")]
-position = Vector2(417, 268)
-mass = 30.0
-lock_rotation = true
-script = null
+[node name="meleeMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_p6jpk")]
+player = NodePath("../Player")
+
+[node name="HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_xlvfx")]
+player = NodePath("../Player")
+
+[connection signal="spawned_mobs" from="MainTileMapLayer" to="HUD" method="_on_main_tile_map_layer_spawned_mobs"]
+[connection signal="death" from="meleeMob" to="HUD" method="_on_melee_mob_death"]

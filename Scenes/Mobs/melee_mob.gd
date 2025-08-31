@@ -18,7 +18,7 @@ var movement_force = acceleration * mass * 32 # px/m
 @onready var attack_area = $AttackArea
 @onready var attack_timer = $AttackTimer
 
-signal death()
+signal death(MeleeMob)
 
 #var speed_scalar: float = 200.0
 var player_in_range: Player = null
@@ -65,7 +65,7 @@ func handle_damage(delta: float) -> void:
 	var force: float = abs(delta_vel)/delta * mass_max
 	#print("force: ", force)
 	if force > force_threshold:
-		var damage: float = force/25000 * damage_tuner
+		var damage: float = force/25000 * damage_tuner*100
 		#print("damage taken: ", damage)
 		health_module.take_damage(damage)
 		mass = 0.1*mass_max
@@ -102,8 +102,8 @@ func _on_attack_timer_timeout() -> void:
 	try_attack()
 
 func died() -> void:
-	death.emit()
-
+	death.emit(self)
+	
 func apply_friction() -> void:
 	#print(linear_velocity.length(), "/", max_vel)
 	if flying:
