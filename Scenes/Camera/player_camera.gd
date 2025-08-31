@@ -48,4 +48,4 @@ func limit_to_room(room: Room) -> void:
 	limit_top = room_position.y
 	limit_left = room_position.x
 	limit_bottom = room_position.y + rect.size.y * Globals.tile_size
-	limit_right = room_position.x + (rect.size.x - 1) * Globals.tile_size
+	limit_right = room_position.x + rect.size.x * Globals.tile_size

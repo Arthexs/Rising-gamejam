@@ -2,9 +2,6 @@ extends Node
 
 #class_name Globals
 
-@export var melee1_packed_scene: PackedScene = preload("res://Scenes/Mobs/melee_mob.tscn") as PackedScene
-@export var ranged1_packed_scene: PackedScene = preload("res://Scenes/Mobs/ranged_mob.tscn") as PackedScene
-
 var popup_manager: PopupManager
 
 func _ready() -> void:
@@ -19,7 +16,7 @@ const tile_size: float = 32.0
 
 const door_velocity: float = 1200
 
-const tiles_in_a_room: int = 100
+const tiles_in_a_room: int = 300
 const minimum_mobs_in_room: int = 2
 
 var time_elapsed: float = 0
@@ -27,14 +24,44 @@ const time_per_difficulty:float = 50 # [s]
 var difficulty: int = 2
 
 const mob_spawn_rates: Dictionary[String, int] = {
-	"melee1" = 3,
+	"melee1" = 4,
 	"ranged1"= 2,
 }
 
 var mob_scenes: Dictionary[String, PackedScene] = {
-	"melee1" = melee1_packed_scene,
-	"ranged1" = ranged1_packed_scene,
+	"melee1" = preload("res://Scenes/Mobs/melee_mob.tscn") as PackedScene,
+	"ranged1" = preload("res://Scenes/Mobs/ranged_mob.tscn") as PackedScene,
 }
+
+var level_spawn_rates: Dictionary[String, int] = {
+	"room1" = 10,
+	"room2" = 10,
+	"room3" = 10,
+	"room4" = 10,
+	"room5" = 10,
+	"room6" = 10,
+	"room7" = 10,
+	"room8" = 10,
+	"room9" = 10,
+}
+
+var level_scenes: Dictionary[String, PackedScene] = {
+	"room1" = preload("res://Scenes/Map/Hell6/room1.tscn") as PackedScene,
+	"room2" = preload("res://Scenes/Map/Hell6/room2.tscn") as PackedScene,
+	"room3" = preload("res://Scenes/Map/Hell6/room3.tscn") as PackedScene,
+	"room4" = preload("res://Scenes/Map/Hell6/room4.tscn") as PackedScene,
+	"room5" = preload("res://Scenes/Map/Hell6/room5.tscn") as PackedScene,
+	"room6" = preload("res://Scenes/Map/Hell6/room6.tscn") as PackedScene,
+	"room7" = preload("res://Scenes/Map/Hell6/room7.tscn") as PackedScene,
+	"room8" = preload("res://Scenes/Map/Hell6/room8.tscn") as PackedScene,
+	"room9" = preload("res://Scenes/Map/Hell6/room9.tscn") as PackedScene,
+}
+
+var special_rooms: Dictionary[String, PackedScene] = {
+	"starter_room" = preload("res://Scenes/Map/Hell6/room0Start.tscn") as PackedScene,
+	"stairs_room" = preload("res://Scenes/Map/Hell6/room10STAIRS.tscn") as PackedScene,
+}
+
 
 func _physics_process(delta: float) -> void:
 	time_elapsed += delta
@@ -58,3 +85,5 @@ func pick_weighted_random(weights: Dictionary) -> String:
 	
 	return ""
 	
+func vec2i_from_vec3i(a: Vector3i) -> Vector2i:
+	return Vector2i(a.x, a.y)
