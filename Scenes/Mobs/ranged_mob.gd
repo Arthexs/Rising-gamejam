@@ -29,6 +29,8 @@ var prev_velocity: Vector2 = Vector2.ZERO
 var mass_max: float = mass
 var flying: bool = false
 
+var agro: bool = false
+
 @onready var shooting_timer = $ShootingTimer
 @onready var shooting_area = $ShootingArea
 @onready var collision_shape = $ShootingArea/CollisionShape2D
@@ -61,19 +63,26 @@ func _physics_process(delta: float) -> void:
 	
 	handle_damage(delta)
 	
+	
+	
+	if agro:
 	# Decide behavior based on distance
-	if distance > preferred_distance + tolerance:
-		# Too far → move closer
-		apply_movement(direction)
-	elif distance < preferred_distance - tolerance:
-		# Too close → move away
-		apply_movement(-direction)
+		if distance > preferred_distance + tolerance:
+			# Too far → move closer
+			apply_movement(direction)
+		elif distance < preferred_distance - tolerance:
+			# Too close → move away
+			apply_movement(-direction)
+		else:
+			# In range → apply friction so it stops
+			apply_friction()
+		try_attack()
 	else:
-		# In range → apply friction so it stops
-		apply_friction()
+		agro = to_player.length() < Globals.vision_radius
+		#if agro:
+			#print("enemy agro'ed")
 	
 	prev_velocity = linear_velocity
-	try_attack()
 	
 func handle_damage(delta: float) -> void:
 	var delta_vel: float = linear_velocity.length() - prev_velocity.length()
