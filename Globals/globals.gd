@@ -34,6 +34,8 @@ var mob_scenes: Dictionary[String, PackedScene] = {
 	"ranged1" = preload("res://Scenes/Mobs/ranged_mob.tscn") as PackedScene,
 }
 
+var mob_scene_names: Array[String] = ["meleeMob", "RangedMob"]
+
 var level_spawn_rates: Dictionary[String, int] = {
 	"room1" = 10,
 	"room2" = 10,

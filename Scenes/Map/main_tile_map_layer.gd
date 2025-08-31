@@ -71,6 +71,12 @@ func check_door(rid: RID) -> void:
 				var room_connection: Vector4i = room_scene.door_connections[i_connection]
 				var room_connection_pos: Vector2i = Vector2i(room_connection.x, room_connection.y)
 				
+				## Delete enemies
+				for child: Node in active_room.get_children():
+					if Globals.mob_scene_names.has(child.name):
+						#print("found mob: ", child.name)
+						child.queue_free()
+				
 				var offset_pos: Vector2i = door_position - room_connection_pos
 				active_room = room_scene
 				active_room.disabled_connection = i_connection
@@ -135,8 +141,8 @@ func spawn_mobs(count: int) -> void:
 		var i_tile: int = randi() % activeTiles.size()
 		var cell_pos: Vector2i = activeTiles[i_tile]
 		var pos: Vector2 = (active_room.offset + cell_pos) * Globals.tile_size
-		print("spawn at ", pos)
-		print("spawn at tile pos: ", active_room.offset + cell_pos)
+		#print("spawn at ", pos)
+		#print("spawn at tile pos: ", active_room.offset + cell_pos)
 		
 		if (pos-player.global_position).length() < min_spawn_distance:
 			continue
@@ -150,7 +156,7 @@ func spawn_mobs(count: int) -> void:
 		var mob_scene: PackedScene = Globals.mob_scenes[mob_name]
 		
 		var mob: RigidBody2D = mob_scene.instantiate()
-		print("spawned ", mob.name)
+		#print("spawned ", mob.name)
 		mob.global_position = cell_pos * Globals.tile_size
 		mob.player = player
 		active_room.add_child(mob)

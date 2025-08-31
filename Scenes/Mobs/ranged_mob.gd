@@ -2,6 +2,8 @@ extends RigidBody2D
 
 class_name RangedMob
 
+@export var body: AnimatedSprite2D
+
 @export var preferred_distance: float = 150.0 # sweet spot distance
 @export var tolerance: float = 25.0           # +/- range around preferred_distance
 #@export var speed: float = 200.0
@@ -51,6 +53,8 @@ func _ready() -> void:
 	var shape = collision_shape.shape
 	if shape is CircleShape2D:
 		shape.radius = preferred_distance + tolerance
+	
+	body.play("idle")
 
 func set_target(target_position: Vector2):
 	agent.target_position = target_position

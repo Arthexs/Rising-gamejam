@@ -27,6 +27,8 @@ position = Vector2(61, 98)
 [node name="RangedMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_p6jpk")]
 position = Vector2(347, 81)
 player = NodePath("../Player")
+shoot_interval = 5.0
+projectile_speed = 600.0
 
 [node name="Player" parent="." instance=ExtResource("2_qw60k")]
 position = Vector2(129, 83)
