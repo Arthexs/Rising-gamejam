@@ -17,8 +17,8 @@ script = ExtResource("1_1r6ip")
 tracking_object = NodePath("../Player")
 
 [node name="MainTileMapLayer" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_5yls4")]
-player = NodePath("../Player")
 mob_scene = ExtResource("5_p6jpk")
+player = NodePath("../Player")
 
 [node name="Item" parent="." instance=ExtResource("5_xlvfx")]
 position = Vector2(61, 98)
@@ -30,11 +30,11 @@ player = NodePath("../Player")
 [node name="Player" parent="." instance=ExtResource("2_qw60k")]
 position = Vector2(129, 83)
 
-[node name="meleeMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_p6jpk")]
+[node name="meleeMob" parent="." instance=ExtResource("5_p6jpk")]
 position = Vector2(417, 268)
 mass = 30.0
 lock_rotation = true
-player = NodePath("../Player")
+script = null
 
 [node name="CanvasGroup" type="CanvasGroup" parent="."]
 

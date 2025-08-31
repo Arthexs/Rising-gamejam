@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://buug0vtr25jkt" path="res://Scenes/Player/health_module.tscn" id="4_mtuoh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a3d8c"]
-size = Vector2(32, 32)
+size = Vector2(30, 30)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mtuoh"]
 bounce = 1.0
@@ -111,6 +111,9 @@ animations = [{
 size = Vector2(32, 32)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "collision_box", "health_module")]
+position = Vector2(0, -4)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_a3d8c")
 hurtbox = NodePath("Hitbox")
 collision_box = NodePath("CollisionShape2D")
@@ -126,6 +129,8 @@ shape = SubResource("RectangleShape2D_a3d8c")
 
 [node name="weapon" type="RigidBody2D" parent="."]
 position = Vector2(8, -8)
+collision_layer = 3
+collision_mask = 3
 mass = 50.0
 physics_material_override = SubResource("PhysicsMaterial_mtuoh")
 gravity_scale = 0.0

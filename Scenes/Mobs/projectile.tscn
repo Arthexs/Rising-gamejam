@@ -1,19 +1,34 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2cskic1md8os"]
+[gd_scene load_steps=5 format=3 uid="uid://c2cskic1md8os"]
 
 [ext_resource type="Script" uid="uid://6l1ck05qu67o" path="res://Scenes/Mobs/projectile.gd" id="1_57ana"]
 [ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="2_butr4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_frgvm"]
-size = Vector2(12, 12)
+size = Vector2(60, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_butr4"]
+size = Vector2(8, 8)
 
 [node name="Projectile" type="RigidBody2D"]
+collision_layer = 18
+collision_mask = 18
 mass = 0.1
+gravity_scale = 0.0
 script = ExtResource("1_57ana")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.05, 0.05)
 texture = ExtResource("2_butr4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(2, 2)
+position = Vector2(1.19209e-07, -1.19209e-07)
+scale = Vector2(0.1, 0.1)
 shape = SubResource("RectangleShape2D_frgvm")
+
+[node name="ProjectileArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileArea"]
+shape = SubResource("RectangleShape2D_butr4")
+
+[connection signal="area_entered" from="ProjectileArea" to="." method="_on_projectile_area_area_entered"]
+[connection signal="body_entered" from="ProjectileArea" to="." method="_on_projectile_area_body_entered"]
