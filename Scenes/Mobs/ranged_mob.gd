@@ -30,6 +30,8 @@ var health_module: HealthModule
 var prev_velocity: Vector2 = Vector2.ZERO
 var mass_max: float = mass
 var flying: bool = false
+var attacking: bool = false
+
 
 var agro: bool = false
 
@@ -67,8 +69,6 @@ func _physics_process(delta: float) -> void:
 	
 	handle_damage(delta)
 	
-	
-	
 	if agro:
 	# Decide behavior based on distance
 		if distance > preferred_distance + tolerance:
@@ -86,8 +86,20 @@ func _physics_process(delta: float) -> void:
 		#if agro:
 			#print("enemy agro'ed")
 	
-	prev_velocity = linear_velocity
+	do_animation()
 	
+	prev_velocity = linear_velocity
+
+func do_animation() -> void:
+	if body.animation == "attacking" and not attacking:
+		body.play("idle")
+	elif body.animation == "idle" and attacking:
+		body.play("attacking")
+	
+	if linear_velocity.length() > Globals.flip_velocity:
+		body.flip_h = linear_velocity.x < 0
+			
+
 func handle_damage(delta: float) -> void:
 	var delta_vel: float = linear_velocity.length() - prev_velocity.length()
 	
@@ -100,6 +112,7 @@ func handle_damage(delta: float) -> void:
 		#print("damage taken: ", damage, " | ", force/25000, "*", damage_tuner)
 		health_module.take_damage(damage)
 		mass = 0.1*mass_max
+		stop_attacking()
 		#apply_central_force(linear_velocity.normalized() * force)
 		flying = true
 	
@@ -115,6 +128,8 @@ func handle_damage(delta: float) -> void:
 	
 	prev_velocity = linear_velocity
 
+func stop_attacking() -> void:
+	attacking = false
 
 func try_attack():
 	if player_in_range and shooting_timer.is_stopped():

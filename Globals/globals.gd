@@ -14,6 +14,7 @@ enum directions {UP, RIGHT, DOWN, LEFT}
 
 const tile_size: float = 32.0
 const vision_radius: float = 32*6
+const flip_velocity: float = 5
 
 const door_velocity: float = 800
 
