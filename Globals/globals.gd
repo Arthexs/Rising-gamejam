@@ -69,7 +69,7 @@ var special_rooms: Dictionary[String, PackedScene] = {
 
 func _physics_process(delta: float) -> void:
 	time_elapsed += delta
-	difficulty = int(time_elapsed/time_per_difficulty)
+	difficulty = int(time_elapsed/time_per_difficulty) + minimum_mobs_in_room
 
 func pick_weighted_random(weights: Dictionary) -> String:
 	var total_weights: int = 0

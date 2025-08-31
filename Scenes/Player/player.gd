@@ -64,6 +64,8 @@ func _physics_process(delta: float):
 	elif velocity.x < -0.1:
 		_animated_sprite.play(current_stage)
 		_animated_sprite.flip_h = true
+	elif velocity.y != 0:
+		_animated_sprite.play(current_stage)
 	else:
 		_animated_sprite.stop()
 	handle_items()

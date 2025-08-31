@@ -9,9 +9,9 @@ class_name MeleeMob
 @export var attack_interval: float = 1.0
 @onready var _animated_sprite = $AnimatedSprite2D
 
-@export var force_threshold: float = 170000 # force threshold to be send flying
+@export var force_threshold: float = 155000 # force threshold to be send flying
 @export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
-@export var damage_tuner: float = 1.0
+@export var damage_tuner: float = 2.0
 @export var friction_coefficient: float = 25 # px/m/s
 @export var acceleration: float = 1.5
 var movement_force = acceleration * mass * 32 # px/m
@@ -72,7 +72,7 @@ func handle_damage(delta: float) -> void:
 	var force: float = abs(delta_vel)/delta * mass_max
 	#print("force: ", force)
 	if force > force_threshold:
-		var damage: float = force/25000 * damage_tuner*100
+		var damage: float = force/25000 * damage_tuner
 		#print("damage taken: ", damage)
 		health_module.take_damage(damage)
 		mass = 0.1*mass_max

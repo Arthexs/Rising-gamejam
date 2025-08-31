@@ -27,8 +27,8 @@ func _on_main_tile_map_layer_spawned_mobs(mobs: Array[RigidBody2D]) -> void:
 			melee_mob.death.connect(_on_melee_mob_death)
 		if mob is RangedMob:
 			var ranged_mob: RangedMob = mob as RangedMob
-			#ranged_mob.death.connect(_on_ranged_mob_death)
-			#print("hooked ranged")
+			ranged_mob.death.connect(_on_ranged_mob_death)
+
 
 
 func _on_melee_mob_death(mob: MeleeMob) -> void:

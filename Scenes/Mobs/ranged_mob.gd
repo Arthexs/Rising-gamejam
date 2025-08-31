@@ -138,9 +138,9 @@ func try_attack():
 
 func start_attack() -> void:
 	attacking = true
-	var summoning_circ: SummoningProjectile = summoning_scene.instantiate()
-	summoning_circ.global_position = Vector2(0, -collision_shape.shape.get_rect().size.y/2-6)
-	add_child(summoning_circ)
+	#var summoning_circ: SummoningProjectile = summoning_scene.instantiate()
+	#summoning_circ.global_position = Vector2(0, -collision_shape.shape.get_rect().size.y/2-6)
+	#add_child(summoning_circ)
 	
 	#add_child(summoning_scene.)
 	
