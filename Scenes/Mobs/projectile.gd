@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+class_name FireBall
+
 @export var speed: float = 200.0
 @export var damage: float = 10.0
 #var velocity: Vector2 = Vector2.ZERO

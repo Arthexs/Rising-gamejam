@@ -1,7 +1,8 @@
-[gd_scene load_steps=31 format=3 uid="uid://bo358una2qcdx"]
+[gd_scene load_steps=32 format=3 uid="uid://bo358una2qcdx"]
 
 [ext_resource type="Script" uid="uid://ssl3pypti8gp" path="res://Scenes/Mobs/ranged_mob.gd" id="1_jcomp"]
 [ext_resource type="PackedScene" uid="uid://c2cskic1md8os" path="res://Scenes/Mobs/projectile.tscn" id="2_5bao8"]
+[ext_resource type="PackedScene" uid="uid://cs1tko6b1oq2s" path="res://Scenes/Mobs/summoning_circle.tscn" id="2_s2fpy"]
 [ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="2_tmhk6"]
 [ext_resource type="Texture2D" uid="uid://cmlhpycx0b6wg" path="res://Assets/mobs/eye_attack.png" id="3_3c33c"]
 [ext_resource type="Texture2D" uid="uid://cp0nk6tgg5lxi" path="res://Assets/mobs/eye_idle.png" id="3_4i2d1"]
@@ -177,6 +178,7 @@ lock_rotation = true
 script = ExtResource("1_jcomp")
 body = NodePath("Body")
 agent = NodePath("NavigationAgent2D")
+summoning_scene = ExtResource("2_s2fpy")
 projectile_scene = ExtResource("2_5bao8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
