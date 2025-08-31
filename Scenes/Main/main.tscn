@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://2hfgbvgo20vm" path="res://Scenes/Items/item.tscn" id="5_xlvfx"]
 [ext_resource type="PackedScene" uid="uid://bvaqysdblrjvn" path="res://Scenes/HUD/hud.tscn" id="7_xlvfx"]
 [ext_resource type="Script" uid="uid://dwhnl7ka2374k" path="res://Scenes/Main/HUD.gd" id="8_hryqi"]
-[ext_resource type="PackedScene" path="res://Scenes/HUD/pop-up-label.tscn" id="9_imbg2"]
+[ext_resource type="PackedScene" uid="uid://bw3bxphlvb6ep" path="res://Scenes/HUD/pop-up-label.tscn" id="9_imbg2"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1r6ip")

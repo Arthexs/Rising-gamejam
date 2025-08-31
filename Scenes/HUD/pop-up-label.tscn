@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bw3bxphlvb6ep"]
 
-[ext_resource type="FontFile" path="res://Assets/Fonts/arcadeclassic/ARCADECLASSIC.TTF" id="1_lxper"]
+[ext_resource type="FontFile" uid="uid://yjhehu3beunu" path="res://Assets/Fonts/arcadeclassic/ARCADECLASSIC.TTF" id="1_lxper"]
 
 [node name="Label" type="Label"]
 modulate = Color(1, 1, 1, 0)
