@@ -119,6 +119,8 @@ func entering_room(connection: Vector4i) -> void:
 	rocks.restart()
 	rocks.emitting = true
 	
+	
+	
 	#print("apply velocity")
 	# start entering animation and stuff
 
@@ -133,6 +135,8 @@ func spawn_mobs(count: int) -> void:
 		var i_tile: int = randi() % activeTiles.size()
 		var cell_pos: Vector2i = activeTiles[i_tile]
 		var pos: Vector2 = (active_room.offset + cell_pos) * Globals.tile_size
+		print("spawn at ", pos)
+		print("spawn at tile pos: ", active_room.offset + cell_pos)
 		
 		if (pos-player.global_position).length() < min_spawn_distance:
 			continue
@@ -147,7 +151,7 @@ func spawn_mobs(count: int) -> void:
 		
 		var mob: RigidBody2D = mob_scene.instantiate()
 		print("spawned ", mob.name)
-		mob.global_position = pos
+		mob.global_position = cell_pos * Globals.tile_size
 		mob.player = player
 		active_room.add_child(mob)
 		
