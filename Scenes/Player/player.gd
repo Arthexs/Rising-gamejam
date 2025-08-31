@@ -56,7 +56,7 @@ func _physics_process(delta: float):
 		global_position += velocity * delta
 	
 	handle_items()
-	#queue_redraw()  # Forces redraw every frame
+	queue_redraw()  # Forces redraw every frame
 
 func apply_velocity(v: Vector2, hitable: bool) -> void:
 	applied_velocity = v

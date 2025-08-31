@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=4 uid="uid://4jpj2ep3ot7x"]
 
 [ext_resource type="Texture2D" uid="uid://dn3aas30dllex" path="res://Assets/Map/Placeholder/Colors.png" id="1_6krgi"]
-[ext_resource type="Script" uid="uid://cnjbh0gl5gaah" path="res://Scenes/Map/room.gd" id="2_eh42m"]
+[ext_resource type="Script" path="res://Scenes/Map/room.gd" id="2_eh42m"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_6krgi"]
 vertices = PackedVector2Array(320, 828.867, 27.4922, 830.781, 39.5234, 41.8438, 320, 512, 574, 39.1094, 574, 65.5, 512, 512, 928, 37.2969, 1349.77, 35.1563, 1344.22, 822.203, 928.008, 64, 512, 827.633, 512, 800, 768, 800, 768, 608, 706, 64, 706, 65.5, 512, 608)
