@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://ebf26ocgcpbl"]
+[gd_scene load_steps=9 format=4 uid="uid://ebf26ocgcpbl"]
 
 [ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="1_e47lu"]
+[ext_resource type="Script" uid="uid://cnjbh0gl5gaah" path="res://Scenes/Map/room.gd" id="1_ug6a3"]
 [ext_resource type="TileSet" uid="uid://dii4bme53hxom" path="res://Scenes/Map/flooring.tres" id="2_e47lu"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_e47lu"]
@@ -37,8 +38,10 @@ custom_data_layer_0/name = "Spawnable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_u0q70")
 
-[node name="NavigationRegion2D" type="NavigationRegion2D"]
+[node name="Room5" type="NavigationRegion2D" node_paths=PackedStringArray("tilemap")]
 navigation_polygon = SubResource("NavigationPolygon_e47lu")
+script = ExtResource("1_ug6a3")
+tilemap = NodePath("Walls")
 
 [node name="Floor32" type="TileMapLayer" parent="."]
 texture_filter = 1
