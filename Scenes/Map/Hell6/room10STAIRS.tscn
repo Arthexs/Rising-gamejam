@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=4 uid="uid://cdp778a5tup3n"]
 
 [ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="1_m6uv1"]
-[ext_resource type="TileSet" uid="uid://dii4bme53hxom" path="res://Scenes/Map/flooring.tres" id="2_0jysf"]
+[ext_resource type="TileSet" uid="uid://b4mjquid3iman" path="res://Scenes/Map/flooring.tres" id="2_0jysf"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_m6uv1"]
 vertices = PackedVector2Array(682, 470, 598, 470, 554, 458, 554, 374, 598, 330, 726, 330, 726, 630, 682, 554, 598, 554, 557.203, 630, 557.203, 626.797, 470, 458, 466.797, 626.797, 426, 554, 426, 470, 557.203, 77.2031, 557.203, 74, 662, 74, 662, 246, 598, 246, 466.797, 630, 298, 630, 342, 554, 298, 330, 342, 470, 426, 330, 470, 374, 426, 246, 362, 246, 362, 74, 466.797, 74, 466.797, 77.2031)
