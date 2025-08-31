@@ -17,12 +17,13 @@ var movement_force = acceleration * mass * 32 # px/m
 @export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
 @export var damage_tuner: float = 1.0
 
+@export var summoning_scene: PackedScene
 @export var projectile_scene: PackedScene
 @export var shoot_interval: float = 1000
 @export var projectile_speed: float = 1.0
 @export var projectile_damage: float = 1.0
 
-signal death()
+signal death(mob: RangedMob)
 
 var player_in_range: Player = null
 
@@ -31,7 +32,6 @@ var prev_velocity: Vector2 = Vector2.ZERO
 var mass_max: float = mass
 var flying: bool = false
 var attacking: bool = false
-
 
 var agro: bool = false
 
@@ -98,7 +98,7 @@ func do_animation() -> void:
 	
 	if linear_velocity.length() > Globals.flip_velocity:
 		body.flip_h = linear_velocity.x < 0
-			
+	
 
 func handle_damage(delta: float) -> void:
 	var delta_vel: float = linear_velocity.length() - prev_velocity.length()
@@ -133,14 +133,23 @@ func stop_attacking() -> void:
 
 func try_attack():
 	if player_in_range and shooting_timer.is_stopped():
-		shoot_projectile()
+		start_attack()
 		shooting_timer.start()
 
-func _on_attack_timer_timeout() -> void:
-	try_attack()
+func start_attack() -> void:
+	attacking = true
+	var summoning_circ: SummoningProjectile = summoning_scene.instantiate()
+	summoning_circ.global_position = Vector2(0, -collision_shape.shape.get_rect().size.y/2-6)
+	add_child(summoning_circ)
+	
+	#add_child(summoning_scene.)
+	
+
+#func _on_attack_timer_timeout() -> void:
+	#try_attack()
 
 func died() -> void:
-	death.emit()
+	death.emit(self)
 
 func apply_friction() -> void:
 	if linear_velocity.length() > 0:

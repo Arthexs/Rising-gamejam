@@ -27,11 +27,13 @@ position = Vector2(61, 98)
 [node name="RangedMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_p6jpk")]
 position = Vector2(347, 81)
 player = NodePath("../Player")
+summoning_scene = null
 shoot_interval = 5.0
 projectile_speed = 600.0
 
-[node name="Player" parent="." instance=ExtResource("2_qw60k")]
+[node name="Player" parent="." node_paths=PackedStringArray("hud_info") instance=ExtResource("2_qw60k")]
 position = Vector2(129, 83)
+hud_info = NodePath("../HUD")
 
 [node name="meleeMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_p6jpk")]
 player = NodePath("../Player")
@@ -52,5 +54,6 @@ player = NodePath("../Player")
 [connection signal="change_room" from="MainTileMapLayer" to="PlayerCamera" method="limit_to_room"]
 [connection signal="do_screenshake" from="MainTileMapLayer" to="PlayerCamera" method="shake_cam"]
 [connection signal="spawned_mobs" from="MainTileMapLayer" to="HUD" method="_on_main_tile_map_layer_spawned_mobs"]
+[connection signal="death" from="RangedMob" to="HUD" method="_on_ranged_mob_death"]
 [connection signal="hurtbox_hit" from="Player" to="MainTileMapLayer" method="_on_player_hurtbox_hit"]
 [connection signal="death" from="meleeMob" to="HUD" method="_on_melee_mob_death"]

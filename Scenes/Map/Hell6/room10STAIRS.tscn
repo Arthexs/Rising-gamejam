@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=4 uid="uid://cdp778a5tup3n"]
+[gd_scene load_steps=9 format=4 uid="uid://cdp778a5tup3n"]
 
+[ext_resource type="Script" uid="uid://cnjbh0gl5gaah" path="res://Scenes/Map/room.gd" id="1_cjwlw"]
 [ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="1_m6uv1"]
 [ext_resource type="TileSet" uid="uid://b4mjquid3iman" path="res://Scenes/Map/flooring.tres" id="2_0jysf"]
 
@@ -35,8 +36,10 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_e3gv1")
 
-[node name="NavigationRegion2D" type="NavigationRegion2D"]
+[node name="Room10" type="NavigationRegion2D" node_paths=PackedStringArray("tilemap")]
 navigation_polygon = SubResource("NavigationPolygon_m6uv1")
+script = ExtResource("1_cjwlw")
+tilemap = NodePath("Walls")
 
 [node name="Floor32" type="TileMapLayer" parent="."]
 texture_filter = 1

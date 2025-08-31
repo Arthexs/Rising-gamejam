@@ -45,7 +45,7 @@ custom_data_layer_0/name = "Spawnable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_3l4nv")
 
-[node name="Room4" type="NavigationRegion2D" node_paths=PackedStringArray("tilemap")]
+[node name="Room14" type="NavigationRegion2D" node_paths=PackedStringArray("tilemap")]
 navigation_polygon = SubResource("NavigationPolygon_v1m8i")
 script = ExtResource("1_4ebim")
 tilemap = NodePath("Walls")

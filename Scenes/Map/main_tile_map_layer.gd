@@ -111,7 +111,7 @@ func get_matching_connection_index(connection: Vector4i, room: Room) -> int:
 
 func entering_room(connection: Vector4i) -> void:
 	var mob_max: int = Globals.difficulty+1
-	var mob_count: int = randi()%(mob_max - Globals.minimum_mobs_in_room) + Globals.minimum_mobs_in_room
+	var mob_count: int = randi()%(mob_max - Globals.minimum_mobs_in_room ) + Globals.minimum_mobs_in_room
 	var size_correction: float = max(1.0, float(active_room.tilemap.get_used_cells().size())/float(Globals.tiles_in_a_room))
 	mob_count = int(size_correction * float(mob_count))
 	
