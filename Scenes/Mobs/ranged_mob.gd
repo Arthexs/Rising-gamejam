@@ -23,7 +23,7 @@ var movement_force = acceleration * mass * 32 # px/m
 @export var projectile_speed: float = 1.0
 @export var projectile_damage: float = 1.0
 
-signal death()
+signal death(mob: RangedMob)
 
 var player_in_range: Player = null
 
@@ -139,7 +139,7 @@ func try_attack():
 func start_attack() -> void:
 	attacking = true
 	var summoning_circ: SummoningProjectile = summoning_scene.instantiate()
-	summoning_circ.global_position = Vector2(-collision_shape.shape.get_rect().size.y/2-6)
+	summoning_circ.global_position = Vector2(0, -collision_shape.shape.get_rect().size.y/2-6)
 	add_child(summoning_circ)
 	
 	#add_child(summoning_scene.)
@@ -149,7 +149,7 @@ func start_attack() -> void:
 	#try_attack()
 
 func died() -> void:
-	death.emit()
+	death.emit(self)
 
 func apply_friction() -> void:
 	if linear_velocity.length() > 0:

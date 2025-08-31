@@ -5,6 +5,8 @@ class_name Player
 @export var hurtbox: Area2D
 @export var collision_box: CollisionShape2D 
 @export var health_module: HealthModule
+@export var hud_info: HUD
+@onready var _animated_sprite = $AnimatedSprite2D
 
 var applied_velocity: Vector2 = Vector2.ZERO
 @export var deaccel: float = 50.0 # px/s^2
@@ -18,6 +20,7 @@ var line_width = 2
 
 func _ready():
 	screen_size = get_viewport_rect().size
+	
 
 func _physics_process(delta: float):
 	var input_vector = Vector2.ZERO # The player's movement vector.
@@ -54,7 +57,15 @@ func _physics_process(delta: float):
 		move_and_slide()
 	else:
 		global_position += velocity * delta
-	
+	var current_stage = "stage" + str(int(floor(hud_info.meter_value / 20)+1))
+	if velocity.x > 0.1:
+		_animated_sprite.play(current_stage)
+		_animated_sprite.flip_h = false
+	elif velocity.x < -0.1:
+		_animated_sprite.play(current_stage)
+		_animated_sprite.flip_h = true
+	else:
+		_animated_sprite.stop()
 	handle_items()
 	queue_redraw()  # Forces redraw every frame
 
