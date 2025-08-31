@@ -39,16 +39,12 @@ func _process(delta: float) -> void:
 
 func _on_player_hurtbox_hit(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	# Do door logic
-	print("checking door")
 	check_door(body_rid)
 
 # Performs door logic based on collision drid (if rid belongs to door cell will perform door logic of said cell)
 func check_door(rid: RID) -> void:
-	print("entering door at ", active_room.tilemap.get_coords_for_body_rid(rid))
 	if active_room.rid_is_door(rid):
-		print("cell is door")
 		if active_room.door_connection_is_valid_for_rid(rid):
-			print("connection is valid")
 			var door_connection: Vector4i = active_room.get_door_connection_for_rid(rid)
 			var door_position: Vector2i = Vector2i(door_connection.x, door_connection.y) + active_room.offset
 			

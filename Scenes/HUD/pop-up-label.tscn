@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bw3bxphlvb6ep"]
 
-[ext_resource type="FontFile" path="res://Assets/Fonts/arcadeclassic/ARCADECLASSIC.TTF" id="1_lxper"]
+[ext_resource type="FontFile" uid="uid://vpir6mve7aey" path="res://Assets/Fonts/arcadeclassic/ARCADECLASSIC.TTF" id="1_lxper"]
 
 [node name="Label" type="Label"]
 modulate = Color(1, 1, 1, 0)
@@ -12,4 +12,4 @@ theme_override_font_sizes/font_size = 40
 text = "AAAAAAAAAAAIAAAAAAAAAAA"
 horizontal_alignment = 1
 vertical_alignment = 2
-autowrap_mode = 3
+autowrap_mode = 2

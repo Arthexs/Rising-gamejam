@@ -19,11 +19,9 @@ func set_door_connections() -> void:
 	var i_door: int = -1 # Index in door_connections
 	
 	var door_positions: Array[Vector3i] = get_door_tile_positions()
-	print(door_positions)
 	door_positions = sort_door_tiles(door_positions)
 	door_cells_positions.clear()
 	for cell: Vector3i in door_positions:
-		print(cell)
 		door_cells_positions.append(Vector2i(cell.x, cell.y))
 	
 	
@@ -57,7 +55,6 @@ func get_door_tile_positions() -> Array[Vector3i]:
 	var directions: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 	for cell: Vector2i in tilemap.get_used_cells():
 		if tilemap.get_cell_tile_data(cell).get_custom_data("Door"):
-			print(cell)
 			for i_search: int in range(4):
 				if tilemap.get_cell_tile_data(cell + directions[i_search]) == null:
 					door_positions.append(Vector3i(cell.x, cell.y, i_search))

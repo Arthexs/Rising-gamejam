@@ -86,7 +86,6 @@ func take_damage(damage: float) -> void:
 
 func _on_hurt_box_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	hurtbox_hit.emit(body_rid, body, body_shape_index, local_shape_index)
-	print("hurtbox hit")
 
 func handle_items() -> void:
 	var areas_overlapping: Array[Area2D] = hurtbox.get_overlapping_areas()
