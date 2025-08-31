@@ -7,6 +7,7 @@ class_name MeleeMob
 @export var player: Player
 @export var attack_power: float = 10.0
 @export var attack_interval: float = 1.0
+@onready var _animated_sprite = $AnimatedSprite2D
 
 @export var force_threshold: float = 170000 # force threshold to be send flying
 @export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
@@ -52,10 +53,16 @@ func _physics_process(delta: float) -> void:
 	handle_damage(delta)
 	
 	set_target(player.global_position)
-	if not agent.is_target_reached() and agent.distance_to_target() < 400:
+	if not agent.is_target_reached() and agent.distance_to_target() < 100:
 		var direction: Vector2 = (agent.get_next_path_position() - global_position).normalized()
 		apply_movement(direction)
-	
+		_animated_sprite.play("move")
+	else :
+		_animated_sprite.play("idle")
+	if linear_velocity.x < -1: # moving left
+		_animated_sprite.flip_h = true
+	elif linear_velocity.x > 1: # moving right
+		_animated_sprite.flip_h = false
 	apply_friction()
 	prev_velocity = linear_velocity
 	
