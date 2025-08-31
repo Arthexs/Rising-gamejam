@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c2cskic1md8os"]
 
 [ext_resource type="Script" uid="uid://6l1ck05qu67o" path="res://Scenes/Mobs/projectile.gd" id="1_57ana"]
-[ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="2_butr4"]
+[ext_resource type="Texture2D" uid="uid://bloqobq22aa7i" path="res://Assets/mobs/eye_projectile.png" id="2_butr4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_frgvm"]
 size = Vector2(60, 60)
@@ -17,7 +17,8 @@ gravity_scale = 0.0
 script = ExtResource("1_57ana")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.05, 0.05)
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
 texture = ExtResource("2_butr4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

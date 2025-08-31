@@ -17,11 +17,11 @@ var movement_force = acceleration * mass * 32 # px/m
 @export var brake_threshold: float = 0.6 # Fraction of velocity needed to be lost to take damage on impact
 @export var damage_tuner: float = 1.0
 
-@export var summoning_scene: PackedScene
+@export var summoning_scene: PackedScene = preload("res://Scenes/Mobs/summoning_circle.tscn") as PackedScene
 @export var projectile_scene: PackedScene
-@export var shoot_interval: float = 1000
-@export var projectile_speed: float = 1.0
-@export var projectile_damage: float = 1.0
+@export var shoot_interval: float = 3
+@export var projectile_speed: float = 200
+@export var projectile_damage: float = 20.0
 
 signal death(mob: RangedMob)
 
@@ -32,12 +32,15 @@ var prev_velocity: Vector2 = Vector2.ZERO
 var mass_max: float = mass
 var flying: bool = false
 var attacking: bool = false
+var stuck: bool = false
 
 var agro: bool = false
+var summoning_circ: SummoningProjectile
 
 @onready var shooting_timer = $ShootingTimer
 @onready var shooting_area = $ShootingArea
 @onready var collision_shape = $ShootingArea/CollisionShape2D
+@onready var hitbox_shape: CollisionShape2D = $CollisionShape2D
 
 func _ready() -> void:
 	mass_max = mass
@@ -69,14 +72,17 @@ func _physics_process(delta: float) -> void:
 	
 	handle_damage(delta)
 	
-	if agro:
+	if agro and not attacking:
 	# Decide behavior based on distance
+		#print(stuck)
 		if distance > preferred_distance + tolerance:
 			# Too far → move closer
 			apply_movement(direction)
 		elif distance < preferred_distance - tolerance:
 			# Too close → move away
 			apply_movement(-direction)
+			if linear_velocity.length_squared() < 1:
+				stuck = true
 		else:
 			# In range → apply friction so it stops
 			apply_friction()
@@ -130,17 +136,21 @@ func handle_damage(delta: float) -> void:
 
 func stop_attacking() -> void:
 	attacking = false
+	stuck = false
 
 func try_attack():
-	if player_in_range and shooting_timer.is_stopped():
+	#print(shooting_timer.time_left)
+	if player_in_range and shooting_timer.time_left < 0.01:
 		start_attack()
 		shooting_timer.start()
 
 func start_attack() -> void:
 	attacking = true
-	#var summoning_circ: SummoningProjectile = summoning_scene.instantiate()
-	#summoning_circ.global_position = Vector2(0, -collision_shape.shape.get_rect().size.y/2-6)
-	#add_child(summoning_circ)
+	#print(summoning_scene)
+	summoning_circ = summoning_scene.instantiate()
+	summoning_circ.global_position = Vector2(0, -hitbox_shape.shape.get_rect().size.y/2-20)
+	add_child(summoning_circ)
+	summoning_circ.animation_finished.connect(shoot_projectile)
 	
 	#add_child(summoning_scene.)
 	
@@ -179,25 +189,30 @@ func apply_movement(direction: Vector2) -> void:
 	apply_central_force(comp_dir)
 
 func shoot_projectile():
-	if not projectile_scene or not player_in_range:
-		return
-
+	#print("shooting")
+	
 	var dir = (player_in_range.global_position - global_position).normalized()
 	var projectile = projectile_scene.instantiate()
 	
-	projectile.global_position = global_position
+	projectile.global_position = global_position + Vector2(0, -hitbox_shape.shape.get_rect().size.y/2-3)
 	projectile.rotation = dir.angle()
 
 	# Apply velocity if available
+	#print("given speed: ", projectile_speed)
 	projectile.linear_velocity = dir * projectile_speed
 	projectile.damage = projectile_damage
-
 	get_parent().add_child(projectile)
+	shooting_timer.start(shoot_interval)
+	
+	stop_attacking()
+
 
 func _on_shooting_area_area_entered(body) -> void:
+	#print("hit")
 	if body is Player:
+		#print("hit player")
 		player_in_range = body
-		try_attack()
+		#try_attack()
 
 
 func _on_shooting_area_area_exited(body) -> void:

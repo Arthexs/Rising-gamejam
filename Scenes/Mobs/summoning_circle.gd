@@ -1,12 +1,14 @@
-extends Node2D
+extends AnimatedSprite2D
 
 class_name SummoningProjectile
 
-@export var summoning_circle: AnimatedSprite2D
-@export var projectile_scene: PackedScene
+#@export var summoning_circle: AnimatedSprite2D
+#@export var projectile_scene: PackedScene
 
 func _ready() -> void:
-	summoning_circle.play("Summon")
+	play("Summon")
 
-func spawn_projectile() -> void:
+func _on_animation_finished() -> void:
+	print("end animation")
 	queue_free()
+	#pass # Replace with function body.

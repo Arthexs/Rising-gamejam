@@ -3,7 +3,7 @@ extends Node2D
 class_name RoomsManager
 
 @export var player: Player
-@export var mob_scene: PackedScene
+#@export var mob_scene: PackedScene
 @export var rocks: CPUParticles2D
 @export var min_spawn_distance: float = 160
 
