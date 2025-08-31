@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://buug0vtr25jkt" path="res://Scenes/Player/health_module.tscn" id="4_mtuoh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a3d8c"]
-size = Vector2(32, 32)
+size = Vector2(30, 30)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mtuoh"]
 bounce = 1.0
@@ -110,12 +110,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
 size = Vector2(32, 32)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "health_module")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "collision_box", "health_module")]
 position = Vector2(0, -4)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_a3d8c")
 hurtbox = NodePath("Hitbox")
+collision_box = NodePath("CollisionShape2D")
 health_module = NodePath("HealthModule")
 metadata/_edit_group_ = true
 
@@ -162,4 +163,5 @@ shape = SubResource("RectangleShape2D_mtuoh")
 [node name="HealthModule" parent="." node_paths=PackedStringArray("box") instance=ExtResource("4_mtuoh")]
 box = NodePath("../CollisionShape2D")
 
+[connection signal="area_exited" from="Hitbox" to="." method="_on_hitbox_area_exited"]
 [connection signal="body_shape_entered" from="Hitbox" to="." method="_on_hurt_box_body_shape_entered"]
