@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c77rs567yitg2"]
 
-[ext_resource type="Script" path="res://Scenes/Mobs/melee_mob.gd" id="1_dqgl2"]
+[ext_resource type="Script" uid="uid://db2ic06qdwqcx" path="res://Scenes/Mobs/melee_mob.gd" id="1_dqgl2"]
 [ext_resource type="Texture2D" uid="uid://ccrdslwfsw0xn" path="res://icon.svg" id="2_ljmiq"]
 [ext_resource type="PackedScene" uid="uid://buug0vtr25jkt" path="res://Scenes/Player/health_module.tscn" id="3_ljmiq"]
 
