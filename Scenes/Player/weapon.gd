@@ -4,8 +4,10 @@ class_name Hammer
 
 # Rotation PD controller
 var target_pos = Vector2.ZERO
-var kp = 1250000.0
+var kp = 1000000.0
 var kd = 300000.0
+
+var to_be_scaled: float = 1.0
 
 # Knockback tuning
 @export var impulse_scale: float = 1.0
@@ -13,11 +15,15 @@ var kd = 300000.0
 @export var minimum_impulse: float = 10.0
 @onready var _animated_sprite = $AnimatedSprite2D
 
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 func _ready():
 	contact_monitor = true
 	max_contacts_reported = 8
 	_animated_sprite.play("weapon")
 
+var w_prev_angular_vel: float = 0
 func _physics_process(delta):
 	# Rotation control (unchanged)
 	target_pos = get_global_mouse_position()
@@ -26,15 +32,26 @@ func _physics_process(delta):
 	var angular_velocity_error = -angular_velocity
 	var torque = (angle_diff * kp) + (angular_velocity_error * kd)
 	apply_torque(torque)
+	scale *= to_be_scaled
+	to_be_scaled = 1.0
+	
+	#var w_angularvel: float = angular_velocity
+	#print(w_angularvel-w_prev_angular_vel)
+	#if abs(w_angularvel-w_prev_angular_vel) > 6:
+		#if not bash_player.playing:
+			#print("Bashed")
+			#bash_player.play()
+	#w_prev_angular_vel = w_angularvel
 
-func _integrate_forces(state):
-	var contact_count = state.get_contact_count()
-	for i in range(contact_count):
-		var collider = state.get_contact_collider_object(i)
-		if collider and collider.is_in_group("enemies"):
-			# Convert local contact position to global position
-			var contact_point = state.get_contact_local_position(i).rotated(rotation) + global_position
-			_apply_momentum_knockback_to(collider, contact_point)
+#func _integrate_forces(state):
+	#var contact_count = state.get_contact_count()
+	#for i in range(contact_count):
+		#var collider = state.get_contact_collider_object(i)
+		#if collider and collider.is_in_group("enemies"):
+			## Convert local contact position to global position
+			#var contact_point = state.get_contact_local_position(i).rotated(rotation) + global_position
+			#_apply_momentum_knockback_to(collider, contact_point)
+
 
 func _apply_momentum_knockback_to(body: Node, contact_point: Vector2):
 	#if not body.has_method("apply_knockback_impulse"):

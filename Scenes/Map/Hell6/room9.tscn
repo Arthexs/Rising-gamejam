@@ -5,9 +5,10 @@
 [ext_resource type="TileSet" uid="uid://b4mjquid3iman" path="res://Scenes/Map/flooring.tres" id="2_ug56i"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ug56i"]
-vertices = PackedVector2Array(1034, 906, 1718, 906, 1718, 1206, 1398, 1206, 1034, 970, 1398, 1290, 1462, 1290, 1462, 1654, 970, 1654, 970, 1590, 906, 1590, 906, 1549.2, 909.203, 1549.2, 909.203, 1458.8, 906, 1458.8, 906, 1418, 970, 1418, 970, 1290, 1226, 1290, 1226, 1206, 1034, 1206, 1034, 1142, 906, 1142, 906, 1101.2, 909.203, 1101.2, 909.203, 1010.8, 906, 1010.8, 906, 970)
+vertices = PackedVector2Array(1039, 911, 1713, 911, 1713, 1201, 1393, 1201, 1039, 975, 1393, 1295, 1457, 1295, 1457, 1649, 975, 1649, 975, 1585, 911, 1585, 911, 1554.2, 914.203, 1554.2, 914.203, 1453.8, 911, 1453.8, 911, 1423, 975, 1423, 975, 1295, 1231, 1295, 1231, 1201, 1039, 1201, 1039, 1137, 911, 1137, 911, 1106.2, 914.203, 1106.2, 914.203, 1005.8, 911, 1005.8, 911, 975)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8, 9), PackedInt32Array(9, 10, 11, 12), PackedInt32Array(13, 14, 15, 16), PackedInt32Array(16, 17, 18), PackedInt32Array(19, 20, 21), PackedInt32Array(21, 22, 23, 24), PackedInt32Array(25, 26, 27, 4), PackedInt32Array(21, 24, 25, 4, 3), PackedInt32Array(19, 21, 3), PackedInt32Array(19, 3, 5, 18), PackedInt32Array(16, 18, 5, 9, 12, 13)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(1018, 849, 1750, 849, 1749, 1231, 1507.5, 1238.59, 1495, 1691, 949, 1683, 943, 1618, 888, 1608, 861, 1546, 860, 1438, 887, 1373, 949, 1372, 949, 1244, 1005, 1237, 997, 1184, 878, 1176, 882, 920, 1002, 910)])
+agent_radius = 15.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vr4hr"]
 texture = ExtResource("1_ug56i")

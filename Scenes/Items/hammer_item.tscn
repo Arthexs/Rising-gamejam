@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1pwd050s1prf"]
+
+[ext_resource type="Texture2D" uid="uid://cqlm7m0uuyva5" path="res://Assets/Items/Hammer-Item.png" id="1_eb80m"]
+[ext_resource type="Script" uid="uid://3k3uc7ddvyie" path="res://Scenes/Items/hammer_item.gd" id="2_eb80m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eb5tt"]
+radius = 18.0
+
+[node name="HammerItem" type="Sprite2D" node_paths=PackedStringArray("interaction_range")]
+texture_filter = 1
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_eb80m")
+script = ExtResource("2_eb80m")
+interaction_range = NodePath("InteractionRange/CollisionShape2D")
+
+[node name="InteractionRange" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionRange"]
+shape = SubResource("CircleShape2D_eb5tt")

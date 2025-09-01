@@ -4,7 +4,7 @@ class_name FireBall
 
 #@export var speed: float = 200.0
 @export var damage: float = 10.0
-var pulse_size: float = 0.4
+var pulse_size: float = 0.5
 var t: float = 0
 #var velocity: Vector2 = Vector2.ZERO
 var fuck: bool = true
@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 	if not fuck:
 		scale = Vector2(size, size)
 	fuck = not fuck
-	print(scale)
+	#print(scale)
 
 #func _physics_process(delta: float) -> void:
 	#move_and_collide(linear_velocity*delta)

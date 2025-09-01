@@ -1,0 +1,127 @@
+[gd_scene load_steps=14 format=3 uid="uid://bfd1bj7sagdkg"]
+
+[ext_resource type="Texture2D" uid="uid://dpiafit64ku6" path="res://Assets/GameEndings/GameOver.png" id="1_f8kwv"]
+[ext_resource type="Script" uid="uid://iwj88aqrdqoi" path="res://Scenes/HUD/game_over.gd" id="1_na3k0"]
+[ext_resource type="Texture2D" uid="uid://c4g23ibtn3ne" path="res://Assets/GameEndings/Flies-GameOver.png" id="2_na3k0"]
+[ext_resource type="FontFile" uid="uid://vpir6mve7aey" path="res://Assets/Fonts/arcadeclassic/ARCADECLASSIC.TTF" id="4_gfw4j"]
+[ext_resource type="AudioStream" uid="uid://bjfk78s08pj25" path="res://Assets/SoundEffects/GameSounds/FailMusic.mp3" id="5_22whk"]
+[ext_resource type="AudioStream" uid="uid://dpnvmawl08rgw" path="res://Assets/SoundEffects/GameSounds/Lose-Scream.mp3" id="6_ybm7q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfw4j"]
+atlas = ExtResource("2_na3k0")
+region = Rect2(0, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22whk"]
+atlas = ExtResource("2_na3k0")
+region = Rect2(190, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybm7q"]
+atlas = ExtResource("2_na3k0")
+region = Rect2(380, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lh23d"]
+atlas = ExtResource("2_na3k0")
+region = Rect2(570, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7k85"]
+atlas = ExtResource("2_na3k0")
+region = Rect2(760, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kokb3"]
+atlas = ExtResource("2_na3k0")
+region = Rect2(950, 0, 190, 162)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qx5lu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfw4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22whk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ybm7q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lh23d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7k85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kokb3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="GameOver" type="Control" node_paths=PackedStringArray("label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_na3k0")
+label = NodePath("Label")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -324.0
+offset_right = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_f8kwv")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(574, 273.5)
+scale = Vector2(3.33951, 3.33951)
+sprite_frames = SubResource("SpriteFrames_qx5lu")
+autoplay = "default"
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -395.5
+offset_top = -103.64
+offset_right = 395.5
+offset_bottom = -42.64
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_gfw4j")
+theme_override_font_sizes/font_size = 60
+text = "Press   any   button   to   restart"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_22whk")
+volume_db = -22.51
+
+[node name="Scream" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ybm7q")
+volume_db = -15.93

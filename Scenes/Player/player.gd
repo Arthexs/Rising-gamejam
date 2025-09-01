@@ -7,20 +7,47 @@ class_name Player
 @export var health_module: HealthModule
 @export var hud_info: HUD
 @onready var _animated_sprite = $AnimatedSprite2D
+@export var min_angular_hit_velocity: float = 3
+@onready var weapon: Hammer = $weapon
+@onready var footstep_player: AudioStreamPlayer = ($Audio/Footsteps as AudioStreamPlayer)
+@onready var hurt_player: AudioStreamPlayer = ($Audio/Hurt as AudioStreamPlayer)
+
+## Flashing
+var t_anim: float = 0
+var t_anim_goal: float = 0
+var c_anim: Color = Color.WHITE
+#@onready sprite: Animat
 
 var applied_velocity: Vector2 = Vector2.ZERO
 @export var deaccel: float = 50.0 # px/s^2
 var can_collide: bool = true
 
 signal hurtbox_hit(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int)
+signal player_dies()
 
 var screen_size 
 var line_color = Color(1, 0, 0)  # Red line
 var line_width = 2
 
+var next_is_hitting: bool = false
+var is_hitting: bool = false
+
 func _ready():
 	screen_size = get_viewport_rect().size
-	
+
+func do_animation(delta: float) -> void:
+	if t_anim_goal != 0:
+		t_anim += delta
+		_animated_sprite.set_instance_shader_parameter("t", t_anim/t_anim_goal)
+		if t_anim >= t_anim_goal:
+			t_anim_goal = 0
+			t_anim = 0
+			_animated_sprite.set_instance_shader_parameter("t", 0)
+
+func flash(color: Color, depth: float, duration: float) -> void:
+	t_anim_goal = duration
+	_animated_sprite.set_instance_shader_parameter("color", color)
+	_animated_sprite.set_instance_shader_parameter("depth", depth)
 
 func _physics_process(delta: float):
 	var input_vector = Vector2.ZERO # The player's movement vector.
@@ -36,7 +63,10 @@ func _physics_process(delta: float):
 		input_vector = input_vector.normalized()
 	if Input.is_action_just_released("ui_cancel"):
 		get_tree().quit() 
-		
+	
+	is_hitting = next_is_hitting
+	next_is_hitting = abs(weapon.angular_velocity) > min_angular_hit_velocity
+	#print(is_hitting)
 		#$AnimatedSprite2D.play()
 	#else:
 		#$AnimatedSprite2D.stssop()
@@ -57,36 +87,51 @@ func _physics_process(delta: float):
 		move_and_slide()
 	else:
 		global_position += velocity * delta
+	
 	var current_stage = "stage" + str(int(floor(hud_info.meter_value / 20)+1))
-	if velocity.x > 0.1:
-		_animated_sprite.play(current_stage)
+	_animated_sprite.play(current_stage)
+	if velocity.x > Globals.flip_velocity:
 		_animated_sprite.flip_h = false
-	elif velocity.x < -0.1:
-		_animated_sprite.play(current_stage)
+	elif velocity.x < -Globals.flip_velocity:
+		#_animated_sprite.play(current_stage)
 		_animated_sprite.flip_h = true
-	else:
+	elif abs(velocity.y) < Globals.flip_velocity:
 		_animated_sprite.stop()
+	
+	if velocity.length() > Globals.flip_velocity:
+		if not footstep_player.playing:
+			print("playing")
+			footstep_player.play()
+	else:
+		if footstep_player.playing:
+			footstep_player.stop()
+		
+	
 	handle_items()
-	queue_redraw()  # Forces redraw every frame
+	#queue_redraw()  # Forces redraw every frame
 
 func apply_velocity(v: Vector2, hitable: bool) -> void:
 	applied_velocity = v
 	can_collide = hitable
 
-func _draw():
-	var mouse_position = get_global_mouse_position()
-	var start_pos = Vector2.ZERO  # Character's local origin
-	var end_pos = to_local(mouse_position)  # Convert global to local space
-	draw_line(start_pos, end_pos, line_color, line_width)
+#func _draw():
+	#var mouse_position = get_global_mouse_position()
+	#var start_pos = Vector2.ZERO  # Character's local origin
+	#var end_pos = to_local(mouse_position)  # Convert global to local space
+	#draw_line(start_pos, end_pos, line_color, line_width)
 
 func _unhandled_input(event: InputEvent) -> void:
 	pass
 
 func _process(delta) -> void:
-	pass
+	do_animation(delta)
 
 func take_damage(damage: float) -> void:
 	health_module.take_damage(damage)
+	if damage >= 0:
+		flash(Color.RED, 0.6, 0.2)
+		hurt_player.play()
+		
 
 #func get_hurt_rids() -> Array[RID]:
 	#var slide_collisions: Array[RID] = []
@@ -125,6 +170,9 @@ func handle_items() -> void:
 	
 	if closest_item.cost != -1:
 		closest_item.make_label()
+		if Input.is_action_just_released("interact"):
+			gain_corruption(5)
+			closest_item.effect()
 
 func _on_hitbox_area_exited(area: Area2D) -> void:
 	var collider_root: Node2D = area.owner
@@ -134,3 +182,10 @@ func _on_hitbox_area_exited(area: Area2D) -> void:
 	#print("removing label")
 	var item: BaseItem = collider_root as BaseItem
 	item.remove_label()
+
+func dies() -> void:
+	player_dies.emit()
+
+func gain_corruption(value: float) -> void:
+	hud_info.meter_value += value
+	hud_info.previous_meter_value += value

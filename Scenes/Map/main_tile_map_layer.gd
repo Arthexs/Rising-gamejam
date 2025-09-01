@@ -6,11 +6,13 @@ class_name RoomsManager
 #@export var mob_scene: PackedScene
 @export var rocks: CPUParticles2D
 @export var min_spawn_distance: float = 160
+@onready var rocks_player: AudioStreamPlayer = ($Audio/Rocks as AudioStreamPlayer)
 
 #var spawnable_rooms: Array[Room]
 
 signal do_screenshake(magnitude: float, duration: float)
 signal spawned_mobs(mobs: Array[RigidBody2D])
+signal game_end(win: bool)
 
 var active_room: Room
 var previous_room: Room
@@ -40,6 +42,11 @@ func _process(delta: float) -> void:
 func _on_player_hurtbox_hit(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	# Do door logic
 	check_door(body_rid)
+	check_stairs(body_rid)
+
+func check_stairs(rid: RID) -> void:
+	if active_room.rid_is_stairs(rid):
+		game_end.emit(true)
 
 # Performs door logic based on collision drid (if rid belongs to door cell will perform door logic of said cell)
 func check_door(rid: RID) -> void:
@@ -110,12 +117,18 @@ func get_matching_connection_index(connection: Vector4i, room: Room) -> int:
 	return -1
 
 func entering_room(connection: Vector4i) -> void:
-	var mob_max: int = Globals.difficulty+1
-	var mob_count: int = randi()%(mob_max - Globals.minimum_mobs_in_room ) + Globals.minimum_mobs_in_room
+	var mob_max: int = Globals.minimum_mobs_in_room + tanh((float(Globals.difficulty)-2.0)/(5.0*4.0)) * 20.0
+	#print(mob_max)
+	var mob_count: int = randi()%mob_max + Globals.minimum_mobs_in_room
 	var size_correction: float = max(1.0, float(active_room.tilemap.get_used_cells().size())/float(Globals.tiles_in_a_room))
-	mob_count = int(size_correction * float(mob_count))
 	
+	mob_count = int(size_correction * float(mob_count))
+	#print(mob_count, "/", mob_max)
 	call_deferred("spawn_mobs", mob_count)
+	
+	var item_count: int = int(ceilf(max(float(randi()%(mob_count+3))/3.0, 0.0)))
+	call_deferred("spawn_items", item_count)
+	
 	var directions: Array[Vector2] = [Vector2.UP, Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT]
 	player.apply_velocity(directions[connection.z] * Globals.door_velocity, false)
 	do_screenshake.emit(70.0, 0.3)
@@ -124,6 +137,7 @@ func entering_room(connection: Vector4i) -> void:
 	rocks.direction = directions[connection.z]
 	rocks.restart()
 	rocks.emitting = true
+	rocks_player.play()
 	
 	
 	
@@ -132,7 +146,6 @@ func entering_room(connection: Vector4i) -> void:
 
 func spawn_mobs(count: int) -> void:
 	var activeTiles: Array[Vector2i] = active_room.tilemap.get_used_cells()
-	var selectedTiles: Array[Vector2i]
 	
 	var added_mobs: Array[RigidBody2D] = []
 	
@@ -159,10 +172,53 @@ func spawn_mobs(count: int) -> void:
 		#print("spawned ", mob.name)
 		mob.global_position = cell_pos * Globals.tile_size
 		mob.player = player
+		
+		var mob_health: float = 60
+		#print(mob)
 		active_room.add_child(mob)
+		if mob is RangedMob:
+			var ranged_mob: RangedMob = mob as RangedMob
+			ranged_mob.health_module.max_health += float(Globals.difficulty)*5
+			ranged_mob.health_module.health = ranged_mob.health_module.max_health
+			ranged_mob.shoot_interval = max(0, ranged_mob.shoot_interval - ranged_mob.shoot_interval/50*Globals.difficulty)
+		elif mob is MeleeMob:
+			var melee_mob: MeleeMob = mob as MeleeMob
+			melee_mob.health_module.max_health += float(Globals.difficulty)*8
+			melee_mob.health_module.health = melee_mob.health_module.max_health
+			melee_mob.acceleration = melee_mob.acceleration*1.10
+			melee_mob.max_velocity+= float(Globals.difficulty)*6
 		
 		added_mobs.append(mob)
 		
 		spawned_count += 1
 	
 	spawned_mobs.emit(added_mobs)
+
+func spawn_items(count: int) -> void:
+	var activeTiles: Array[Vector2i] = active_room.tilemap.get_used_cells()
+	print("spawning items: ", count)
+	var spawned_count = 0
+	
+	while spawned_count < count:
+		var i_tile: int = randi() % activeTiles.size()
+		var cell_pos: Vector2i = activeTiles[i_tile]
+		var pos: Vector2 = (active_room.offset + cell_pos) * Globals.tile_size
+		#print("spawn at ", pos)
+		#print("spawn at tile pos: ", active_room.offset + cell_pos)
+		
+		if (pos-player.global_position).length() < min_spawn_distance:
+			continue
+		
+		var cell: TileData = active_room.tilemap.get_cell_tile_data(cell_pos)
+		if (cell.get_custom_data("Spawnable") != null):
+			if (cell.get_custom_data("Spawnable") as bool) == false:
+				continue
+		
+		var item_name: String = Globals.pick_weighted_random(Globals.item_spawn_rates)
+		var item: BaseItem = Globals.item_scenes[item_name].instantiate()
+		item.global_position = cell_pos * Globals.tile_size
+		item.player = player
+		
+		active_room.add_child(item)
+		spawned_count += 1
+		print("item spawneddd at ", cell_pos)

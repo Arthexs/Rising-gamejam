@@ -1,10 +1,18 @@
-[gd_scene load_steps=74 format=3 uid="uid://dyt4v8eus8pq1"]
+[gd_scene load_steps=80 format=3 uid="uid://dyt4v8eus8pq1"]
 
 [ext_resource type="Script" uid="uid://in80cvamluap" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
+[ext_resource type="Shader" uid="uid://c2bx17nodqpt7" path="res://Assets/flash.gdshader" id="2_dd0ac"]
 [ext_resource type="Texture2D" uid="uid://uu5q3vd62hjp" path="res://Assets/Walkings (3).png" id="2_htcer"]
 [ext_resource type="Script" uid="uid://bds3x30hrriwb" path="res://Scenes/Player/weapon.gd" id="3_xpcdj"]
 [ext_resource type="Texture2D" uid="uid://ciwjnd6te1jlo" path="res://Assets/Hammer (5).png" id="4_htcer"]
 [ext_resource type="PackedScene" uid="uid://buug0vtr25jkt" path="res://Scenes/Player/health_module.tscn" id="4_mtuoh"]
+[ext_resource type="AudioStream" uid="uid://c4cq08bdd0ojy" path="res://Assets/SoundEffects/GameSounds/Hammer.mp3" id="6_jhyir"]
+[ext_resource type="AudioStream" uid="uid://ddx8840loljlj" path="res://Assets/SoundEffects/GameSounds/Ambient Music.mp3" id="7_0u5uq"]
+[ext_resource type="AudioStream" uid="uid://cogyf6sery8p3" path="res://Assets/SoundEffects/GameSounds/Footsteps.wav" id="8_jlvik"]
+[ext_resource type="AudioStream" uid="uid://c6gl5p27jh0mf" path="res://Assets/SoundEffects/GameSounds/Ouch.mp3" id="9_gk6dx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0u5uq"]
+shader = ExtResource("2_dd0ac")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dd0ac"]
 atlas = ExtResource("2_htcer")
@@ -241,7 +249,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"stage1",
-"speed": 5.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -276,7 +284,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"stage2",
-"speed": 5.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -311,7 +319,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"stage3",
-"speed": 5.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -346,7 +354,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"stage4",
-"speed": 5.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -381,7 +389,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"stage5",
-"speed": 5.0
+"speed": 24.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a3d8c"]
@@ -486,10 +494,9 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
-size = Vector2(18, 32)
+size = Vector2(18, 33)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "collision_box", "health_module")]
-position = Vector2(0, -4)
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_a3d8c")
@@ -499,8 +506,10 @@ health_module = NodePath("HealthModule")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_0u5uq")
 sprite_frames = SubResource("SpriteFrames_d4a23")
-animation = &"stage1"
+animation = &"stage5"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, 0.5)
@@ -510,7 +519,7 @@ shape = SubResource("RectangleShape2D_a3d8c")
 position = Vector2(8, -8)
 collision_layer = 3
 collision_mask = 3
-mass = 50.0
+mass = 80.0
 physics_material_override = SubResource("PhysicsMaterial_mtuoh")
 gravity_scale = 0.0
 center_of_mass_mode = 1
@@ -528,7 +537,13 @@ sprite_frames = SubResource("SpriteFrames_aqm4k")
 animation = &"weapon"
 frame_progress = 0.0454644
 
+[node name="Bash" type="AudioStreamPlayer" parent="weapon"]
+stream = ExtResource("6_jhyir")
+volume_db = -19.32
+pitch_scale = 0.85
+
 [node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(-3.875, 0)
 node_a = NodePath("..")
 node_b = NodePath("../weapon")
 
@@ -537,11 +552,31 @@ collision_layer = 12
 collision_mask = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(-4, 0)
+position = Vector2(-4, 0.5)
 shape = SubResource("RectangleShape2D_mtuoh")
 
 [node name="HealthModule" parent="." node_paths=PackedStringArray("box") instance=ExtResource("4_mtuoh")]
 box = NodePath("../CollisionShape2D")
+delete_on_death = false
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Ambient" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_0u5uq")
+volume_db = -25.0
+autoplay = true
+parameters/looping = true
+
+[node name="Footsteps" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("8_jlvik")
+volume_db = -38.0
+pitch_scale = 1.4
+
+[node name="Hurt" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("9_gk6dx")
+volume_db = -15.0
+pitch_scale = 0.85
 
 [connection signal="area_exited" from="Hitbox" to="." method="_on_hitbox_area_exited"]
 [connection signal="body_shape_entered" from="Hitbox" to="." method="_on_hurt_box_body_shape_entered"]
+[connection signal="death" from="HealthModule" to="." method="dies"]

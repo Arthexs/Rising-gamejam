@@ -4,6 +4,7 @@ class_name HealthModule
 
 @export var box: CollisionShape2D
 @export var max_health: float = 100.0
+@export var delete_on_death: bool = true
 @onready var health: float = max_health
 
 signal death()
@@ -34,4 +35,5 @@ func scale_bar() -> void:
 
 func die() -> void:
 	death.emit()
-	get_parent().queue_free()
+	if delete_on_death:
+		get_parent().queue_free()

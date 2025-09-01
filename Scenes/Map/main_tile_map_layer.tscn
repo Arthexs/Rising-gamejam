@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://djwlxf205tx6g"]
+[gd_scene load_steps=5 format=3 uid="uid://djwlxf205tx6g"]
 
 [ext_resource type="Texture2D" uid="uid://d2r7tgn8gmuie" path="res://Assets/Particles/rock.png" id="2_u4jum"]
 [ext_resource type="Script" uid="uid://bu0ybarai5poy" path="res://Scenes/Map/main_tile_map_layer.gd" id="2_yxtan"]
+[ext_resource type="AudioStream" uid="uid://b2bme5ufh8ht6" path="res://Assets/SoundEffects/GameSounds/Door-Break.mp3" id="3_yxtan"]
 
 [sub_resource type="Curve" id="Curve_suw0k"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.97753, 0.0, 0, 0]
@@ -32,3 +33,9 @@ angle_min = -305.5
 angle_max = 247.2
 scale_amount_min = 0.6
 scale_amount_max = 1.7
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Rocks" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_yxtan")
+volume_db = -20.0

@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=4 uid="uid://th2xqvyp2xst"]
+[gd_scene load_steps=9 format=4 uid="uid://f8xkrd5m28d0"]
 
 [ext_resource type="Script" uid="uid://cnjbh0gl5gaah" path="res://Scenes/Map/room.gd" id="1_n2q21"]
 [ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="2_lvbey"]
 [ext_resource type="TileSet" uid="uid://b4mjquid3iman" path="res://Scenes/Map/flooring.tres" id="3_h3qjr"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_v1m8i"]
-vertices = PackedVector2Array(1142, 202, 1142, 502, 1101.2, 498.797, 970, 394, 970, 310, 845.203, 205.203, 845.203, 202, 886, 202, 886, 266, 970, 266, 970, 202, 886, 310, 1101.2, 502, 1010.8, 498.797, 970, 438, 1010.8, 502, 970, 502, 886, 394, 886, 438, 886, 502, 714, 502, 714, 202, 754.797, 205.203, 754.797, 202)
+vertices = PackedVector2Array(1137, 207, 1137, 497, 1106.2, 493.797, 975, 399, 975, 305, 850.203, 210.203, 850.203, 207, 881, 207, 881, 271, 975, 271, 975, 207, 881, 305, 1106.2, 497, 1005.8, 493.797, 975, 433, 1005.8, 497, 975, 497, 881, 399, 881, 433, 881, 497, 719, 497, 719, 207, 749.797, 210.203, 749.797, 207)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(9, 10, 0), PackedInt32Array(9, 0, 4), PackedInt32Array(8, 9, 4, 11), PackedInt32Array(1, 12, 2), PackedInt32Array(3, 2, 13, 14), PackedInt32Array(13, 15, 16, 14), PackedInt32Array(17, 3, 14, 18), PackedInt32Array(18, 19, 20, 21), PackedInt32Array(17, 18, 21), PackedInt32Array(11, 17, 21), PackedInt32Array(8, 11, 21, 22), PackedInt32Array(21, 23, 22), PackedInt32Array(8, 22, 5)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(915, 209, 936, 208, 941, 151, 1159, 152, 1164, 545, 945, 551, 938, 484, 916, 490, 907, 557, 685, 553, 687, 140, 911, 147)])
+agent_radius = 15.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1og81"]
 texture = ExtResource("2_lvbey")

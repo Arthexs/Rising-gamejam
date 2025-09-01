@@ -5,9 +5,10 @@
 [ext_resource type="TileSet" uid="uid://b4mjquid3iman" path="res://Scenes/Map/flooring.tres" id="2_e47lu"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_e47lu"]
-vertices = PackedVector2Array(970, -246, 970, -330, 1014, -330, 1014, -246, 973.203, -13.2031, 1142, -694, 1142, -589.203, 1138.8, -589.203, 714, -694, 1138.8, -498.797, 1142, -498.797, 1142, -330, 1078, -246, 1078, -10, 973.203, -10, 882.797, -13.2031, 886, -246, 882.797, -10, 778, -10, 778, -246, 842, -246, 886, -330, 842, -330, 714, -330, 714, -498.797, 717.203, -498.797, 717.203, -589.203, 714, -589.203)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(9, 10, 11, 2), PackedInt32Array(3, 12, 13, 14, 4), PackedInt32Array(0, 4, 15, 16), PackedInt32Array(15, 17, 18, 19, 20), PackedInt32Array(21, 16, 15, 20, 22), PackedInt32Array(22, 23, 24, 25), PackedInt32Array(26, 27, 8), PackedInt32Array(26, 8, 7, 9, 2, 1), PackedInt32Array(25, 26, 1, 21), PackedInt32Array(25, 21, 22)])
+vertices = PackedVector2Array(1137, -689, 1137, -594.203, 1133.8, -594.203, 719, -689, 1133.8, -493.797, 1137, -493.797, 1137, -335, 1009, -335, 1009, -241, 1073, -241, 1073, -15, 975, -241, 978.203, -18.2031, 975, -335, 978.203, -15, 877.797, -18.2031, 881, -241, 877.797, -15, 783, -15, 783, -241, 847, -241, 881, -335, 847, -335, 719, -335, 719, -493.797, 722.203, -493.797, 722.203, -594.203, 719, -594.203)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10), PackedInt32Array(11, 8, 10, 12), PackedInt32Array(7, 8, 11, 13), PackedInt32Array(10, 14, 12), PackedInt32Array(11, 12, 15, 16), PackedInt32Array(15, 17, 18, 19, 20), PackedInt32Array(21, 16, 15, 20, 22), PackedInt32Array(22, 23, 24, 25), PackedInt32Array(26, 27, 3), PackedInt32Array(26, 3, 2, 4, 7, 13), PackedInt32Array(25, 26, 13, 21), PackedInt32Array(25, 21, 22)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(686, -743, 1157, -745, 1166, -304, 1106, -302, 1109, 21, 747, 23, 750, -299, 684, -302)])
+agent_radius = 15.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ug6a3"]
 texture = ExtResource("1_e47lu")

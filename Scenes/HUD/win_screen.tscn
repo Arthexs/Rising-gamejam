@@ -1,0 +1,151 @@
+[gd_scene load_steps=17 format=3 uid="uid://betw1bn8n12j5"]
+
+[ext_resource type="Script" uid="uid://i2uaeca80i77" path="res://Scenes/HUD/win_screen.gd" id="1_v1o17"]
+[ext_resource type="Texture2D" uid="uid://cmnw5bd5abvb7" path="res://Assets/GameEndings/GameWin.png" id="2_e4svt"]
+[ext_resource type="AudioStream" uid="uid://cefk8qr0hfrye" path="res://Assets/SoundEffects/GameSounds/WinMusic.mp3" id="4_rx4w8"]
+[ext_resource type="FontFile" uid="uid://vpir6mve7aey" path="res://Assets/Fonts/arcadeclassic/ARCADECLASSIC.TTF" id="4_vfy32"]
+[ext_resource type="Texture2D" uid="uid://dsja32fp0u2bn" path="res://Assets/GameEndings/Heaven-Anim.png" id="5_rx4w8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oququ"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(0, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfy32"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(190, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pash2"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(380, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0h74r"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(570, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l6nwj"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(760, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bx1cv"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(950, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oraur"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(1140, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebyjp"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(1330, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwxwi"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(1520, 0, 190, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2uxu"]
+atlas = ExtResource("5_rx4w8")
+region = Rect2(1710, 0, 190, 162)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i0qhl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oququ")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vfy32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pash2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0h74r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l6nwj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bx1cv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oraur")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebyjp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mwxwi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2uxu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GameOver" type="Control" node_paths=PackedStringArray("label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v1o17")
+label = NodePath("Label")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -324.0
+offset_right = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_e4svt")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -395.5
+offset_top = -103.64
+offset_right = 395.5
+offset_bottom = -42.64
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_vfy32")
+theme_override_font_sizes/font_size = 60
+text = "Press   any   button   to   restart"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_rx4w8")
+volume_db = -16.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(574, 273.5)
+scale = Vector2(3.33951, 3.33951)
+sprite_frames = SubResource("SpriteFrames_i0qhl")
+autoplay = "default"

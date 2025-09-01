@@ -5,9 +5,10 @@
 [ext_resource type="TileSet" uid="uid://b4mjquid3iman" path="res://Scenes/Map/flooring.tres" id="2_f2dho"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_f2dho"]
-vertices = PackedVector2Array(758, -374, 886, -374, 886, -333.203, 882.797, -333.203, 882.797, -242.797, 886, -242.797, 886, -202, 758, -202, 758, -138, 694, -138, 694, 74, 822, 74, 822, 438, 781.203, 434.797, 781.203, 438, 690.797, 434.797, 650, 310, 690.797, 438, 650, 438, 330, 310, 330, 74, 522, 74, 522, -74, 54, 204.156, 50.9063, 246, -178.797, 246, -178.797, 242.797, 54, -74, -269.203, 242.797, -269.203, 246, -374, 246, -374, -246, 522, -246, 522, -438, 758, -438)
+vertices = PackedVector2Array(753, -369, 881, -369, 881, -338.203, 877.797, -338.203, 877.797, -237.797, 881, -237.797, 881, -207, 753, -207, 753, -143, 689, -143, 689, 79, 817, 79, 817, 433, 786.203, 429.797, 786.203, 433, 685.797, 429.797, 655, 305, 685.797, 433, 655, 433, 335, 305, 335, 79, 527, 79, 527, -79, 49, 203.93, 46.2578, 241, -173.797, 241, -173.797, 237.797, 49, -79, -274.203, 237.797, -274.203, 241, -369, 241, -369, -241, 527, -241, 527, -433, 753, -433)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(7, 8, 9), PackedInt32Array(10, 11, 12, 13), PackedInt32Array(12, 14, 13), PackedInt32Array(10, 13, 15, 16), PackedInt32Array(15, 17, 18, 16), PackedInt32Array(16, 19, 20, 21), PackedInt32Array(9, 10, 16, 21, 22), PackedInt32Array(23, 24, 25, 26, 27), PackedInt32Array(28, 29, 30, 31), PackedInt32Array(32, 33, 34, 0, 9), PackedInt32Array(26, 28, 31, 27), PackedInt32Array(22, 27, 31, 32, 9), PackedInt32Array(7, 9, 0, 3), PackedInt32Array(7, 3, 4)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(522, 332, 629, 330, 628, 457, 847, 464, 843, 27, 714, 29, 713, -119, 778, -119, 778, -181, 899, -184, 910, -417, 778, -422, 778, -487, 503, -484, 494, -301, -393, -294, -393, 275, 59, 272, 83, -52, 497, -42, 495, 11, 296, 21, 302, 337)])
+agent_radius = 15.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ppab"]
 texture = ExtResource("1_f2dho")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://0xyro4kn2foy"]
+
+[ext_resource type="AudioStream" uid="uid://cc8wxt76ygvnf" path="res://Assets/SoundEffects/GameSounds/Skeleton-Death.mp3" id="1_rik00"]
+[ext_resource type="Script" uid="uid://7p0ccl86h7sj" path="res://Scenes/HUD/audioOnce.gd" id="2_h1d57"]
+
+[node name="SkellyDeath" type="AudioStreamPlayer"]
+stream = ExtResource("1_rik00")
+volume_db = -13.76
+script = ExtResource("2_h1d57")

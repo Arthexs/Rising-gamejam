@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm7y0x6ugvkwp"]
+
+[ext_resource type="AudioStream" uid="uid://cmtsu5nvqabgu" path="res://Assets/SoundEffects/GameSounds/Eye-Death.mp3" id="1_gbuqt"]
+[ext_resource type="Script" uid="uid://7p0ccl86h7sj" path="res://Scenes/HUD/audioOnce.gd" id="2_2fto2"]
+
+[node name="EyeDeath" type="AudioStreamPlayer"]
+stream = ExtResource("1_gbuqt")
+volume_db = -17.79
+pitch_scale = 0.8
+script = ExtResource("2_2fto2")

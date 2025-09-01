@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=4 uid="uid://b2vdjdg0r4skm"]
+[gd_scene load_steps=9 format=4 uid="uid://b06qn38qpwtgc"]
 
 [ext_resource type="Script" uid="uid://cnjbh0gl5gaah" path="res://Scenes/Map/room.gd" id="1_lj4ui"]
 [ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="2_xqd0w"]
 [ext_resource type="TileSet" uid="uid://b4mjquid3iman" path="res://Scenes/Map/flooring.tres" id="3_bdmql"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_v1m8i"]
-vertices = PackedVector2Array(498.797, -50.7969, 566, -50.7969, 566, 10, 522, 54, 694, 10, 694, 50.7969, 690.797, 50.7969, 690.797, 141.203, 694, 141.203, 694, 182, 566, 182, 566, 330, 630, 330, 630, 502, 589.203, 498.797, 589.203, 502, 498.797, 498.797, 458, 310, 498.797, 502, 458, 502, 522, 138, 310, 310, 310, 374, 202, 374, 205.203, 333.203, 202, 333.203, 205.203, 266, 266, 266, 266, 138, 458, 54, 458, -54, 498.797, -54)
+vertices = PackedVector2Array(493.797, -45.7969, 561, -45.7969, 561, 15, 527, 49, 689, 15, 689, 45.7969, 685.797, 45.7969, 685.797, 146.203, 689, 146.203, 689, 177, 561, 177, 561, 335, 625, 335, 625, 497, 594.203, 493.797, 594.203, 497, 493.797, 493.797, 463, 305, 493.797, 497, 463, 497, 527, 143, 305, 305, 305, 369, 207, 369, 210.203, 338.203, 207, 338.203, 210.203, 271, 271, 271, 271, 143, 463, 49, 463, -49, 493.797, -49)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(2, 4, 5, 6), PackedInt32Array(7, 8, 9, 10), PackedInt32Array(11, 12, 13, 14), PackedInt32Array(13, 15, 14), PackedInt32Array(11, 14, 16, 17), PackedInt32Array(16, 18, 19, 17), PackedInt32Array(10, 11, 17, 20), PackedInt32Array(21, 22, 23, 24), PackedInt32Array(23, 25, 24), PackedInt32Array(21, 24, 26, 27), PackedInt32Array(21, 27, 28, 20, 17), PackedInt32Array(3, 29, 30, 0), PackedInt32Array(30, 31, 0), PackedInt32Array(3, 2, 6, 7, 10, 20)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(429, 85, 433, -106, 594, -101, 592, -46, 717, -29, 719, 234, 594, 234, 590, 272, 647, 277, 655, 557, 426, 555, 432, 358, 332, 360, 331, 430, 180, 418, 176, 220, 241, 217, 243, 88)])
+agent_radius = 15.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1og81"]
 texture = ExtResource("2_xqd0w")

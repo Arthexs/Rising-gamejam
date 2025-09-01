@@ -6,16 +6,27 @@ class_name PopupManager
 
 var popups: Array[Label] = []
 var popups_fade_rate: Array[int] = []
-var popups_is_showing: Array[int] = []
+var popups_is_showing: Array[bool] = []
+var popups_persistence: Array[float] = []
 
 var label_correction: Vector2
+
+var t: float = 0
 
 func _ready() -> void:
 	var label_scene: Label = popup_packed_scene.instantiate()
 	label_correction = label_scene.size*label_scene.scale - Vector2(label_scene.size.x/2*label_scene.scale.x, 0) #-label_scene.position
 	#print(label_correction)
 
-func place_label(x: float, y: float, text: String, fade_time: float) -> void:
+func _process(delta: float) -> void:
+	for i: int in range(popups_persistence.size()):
+		if popups_is_showing[i]:
+			popups_persistence[i] -= delta
+			if popups_persistence[i] < 0:
+				var pos: Vector2 = popups[i].global_position + label_correction
+				remove_label(pos.x, pos.y)
+
+func place_label(x: float, y: float, text: String, fade_time: float, persistence: float = INF) -> void:
 	var pos: Vector2 = Vector2(x, y) - label_correction
 	
 	var label: Label = popup_packed_scene.instantiate()
@@ -28,8 +39,9 @@ func place_label(x: float, y: float, text: String, fade_time: float) -> void:
 	
 	var fade_rate: int = int(255/(fade_time/get_physics_process_delta_time()))
 	popups_fade_rate.append(fade_rate)
+	popups_persistence.append(persistence)
 	
-	popups_is_showing.append(fade_rate)
+	popups_is_showing.append(true)
 
 func remove_label(x: float, y: float) -> void:
 	var pos: Vector2 = Vector2(x, y) - label_correction
@@ -58,4 +70,5 @@ func delete_label(i: int) -> void:
 	popups.remove_at(i)
 	popups_fade_rate.remove_at(i)
 	popups_is_showing.remove_at(i)
+	popups_persistence.remove_at(i)
 	label.queue_free()

@@ -150,6 +150,13 @@ func vector_y_ascend(a: Vector3i, b: Vector3i) -> bool:
 func vector_y_descend(a: Vector3i, b: Vector3i) -> bool:
 	return a.x < b.x
 
+func rid_is_stairs(rid: RID) -> bool:
+	if not tilemap.has_body_rid(rid): 
+		return false
+	else:
+		var tile_data: TileData = tilemap.get_cell_tile_data(tilemap.get_coords_for_body_rid(rid))
+		return tile_data.get_custom_data("Stair") as bool
+
 func rid_is_door(rid: RID) -> bool:
 	if not tilemap.has_body_rid(rid): 
 		return false

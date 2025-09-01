@@ -21,6 +21,7 @@ corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 
 [node name="HealthModule" type="ProgressBar"]
+texture_filter = 1
 offset_right = 25.0
 offset_bottom = 3.0
 theme_override_styles/background = SubResource("StyleBoxFlat_y01vn")

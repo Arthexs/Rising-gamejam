@@ -1,14 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://bf0evnpnagmqy"]
+[gd_scene load_steps=9 format=3 uid="uid://bf0evnpnagmqy"]
 
 [ext_resource type="Script" uid="uid://b827sps03we5e" path="res://Scenes/Main/main.gd" id="1_1r6ip"]
-[ext_resource type="PackedScene" uid="uid://bo358una2qcdx" path="res://Scenes/Mobs/ranged_mob.tscn" id="2_p6jpk"]
 [ext_resource type="PackedScene" uid="uid://dyt4v8eus8pq1" path="res://Scenes/Player/player.tscn" id="2_qw60k"]
 [ext_resource type="PackedScene" uid="uid://mdyfi8kuwke7" path="res://Scenes/Camera/player_camera.tscn" id="3_5yls4"]
 [ext_resource type="PackedScene" uid="uid://djwlxf205tx6g" path="res://Scenes/Map/main_tile_map_layer.tscn" id="4_5yls4"]
-[ext_resource type="PackedScene" uid="uid://c77rs567yitg2" path="res://Scenes/Mobs/melee_mob.tscn" id="5_p6jpk"]
-[ext_resource type="PackedScene" uid="uid://2hfgbvgo20vm" path="res://Scenes/Items/item.tscn" id="5_xlvfx"]
+[ext_resource type="PackedScene" uid="uid://2hfgbvgo20vm" path="res://Scenes/Items/health_item.tscn" id="5_xlvfx"]
 [ext_resource type="PackedScene" uid="uid://bvaqysdblrjvn" path="res://Scenes/HUD/hud.tscn" id="7_xlvfx"]
-[ext_resource type="Script" path="res://Scenes/Main/popup_manager.gd" id="8_hryqi"]
+[ext_resource type="Script" uid="uid://dwhnl7ka2374k" path="res://Scenes/Main/popup_manager.gd" id="8_hryqi"]
 [ext_resource type="PackedScene" uid="uid://bw3bxphlvb6ep" path="res://Scenes/HUD/pop-up-label.tscn" id="9_imbg2"]
 
 [node name="Main" type="Node2D"]
@@ -20,19 +18,12 @@ tracking_object = NodePath("../Player")
 [node name="MainTileMapLayer" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_5yls4")]
 player = NodePath("../Player")
 
-[node name="Item" parent="." instance=ExtResource("5_xlvfx")]
-position = Vector2(61, 98)
-
-[node name="RangedMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_p6jpk")]
-position = Vector2(347, 81)
+[node name="HealItem" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_xlvfx")]
+position = Vector2(97, 55)
 player = NodePath("../Player")
 
 [node name="Player" parent="." node_paths=PackedStringArray("hud_info") instance=ExtResource("2_qw60k")]
-position = Vector2(129, 83)
 hud_info = NodePath("../HUD")
-
-[node name="meleeMob" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_p6jpk")]
-player = NodePath("../Player")
 
 [node name="CanvasGroup" type="CanvasGroup" parent="."]
 
@@ -44,12 +35,13 @@ offset_bottom = 40.0
 script = ExtResource("8_hryqi")
 popup_packed_scene = ExtResource("9_imbg2")
 
-[node name="HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("7_xlvfx")]
+[node name="HUD" parent="." node_paths=PackedStringArray("player", "popup_manager") instance=ExtResource("7_xlvfx")]
 player = NodePath("../Player")
+popup_manager = NodePath("../CanvasGroup/Popup_manager")
 
 [connection signal="change_room" from="MainTileMapLayer" to="PlayerCamera" method="limit_to_room"]
 [connection signal="do_screenshake" from="MainTileMapLayer" to="PlayerCamera" method="shake_cam"]
+[connection signal="game_end" from="MainTileMapLayer" to="HUD" method="_on_main_tile_map_layer_game_end"]
 [connection signal="spawned_mobs" from="MainTileMapLayer" to="HUD" method="_on_main_tile_map_layer_spawned_mobs"]
-[connection signal="death" from="RangedMob" to="HUD" method="_on_ranged_mob_death"]
 [connection signal="hurtbox_hit" from="Player" to="MainTileMapLayer" method="_on_player_hurtbox_hit"]
-[connection signal="death" from="meleeMob" to="HUD" method="_on_melee_mob_death"]
+[connection signal="player_dies" from="Player" to="HUD" method="player_died"]

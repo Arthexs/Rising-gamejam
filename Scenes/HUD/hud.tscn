@@ -1,10 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://bvaqysdblrjvn"]
+[gd_scene load_steps=18 format=3 uid="uid://bvaqysdblrjvn"]
 
 [ext_resource type="Script" uid="uid://bf4tlalrywesl" path="res://Scenes/HUD/hud.gd" id="1_33i1w"]
 [ext_resource type="Texture2D" uid="uid://dhk3tyr6fe0li" path="res://Assets/bar.png" id="2_6pkbx"]
 [ext_resource type="Texture2D" uid="uid://dwbvnt7h5yvpn" path="res://Assets/Health-Background.png" id="2_k83ni"]
+[ext_resource type="PackedScene" uid="uid://bfd1bj7sagdkg" path="res://Scenes/HUD/game_over.tscn" id="2_ue6o6"]
 [ext_resource type="Texture2D" uid="uid://ctvkkgvtebcul" path="res://Assets/Health-Empty.png" id="3_6pkbx"]
 [ext_resource type="Texture2D" uid="uid://b4qruo3orb86o" path="res://Assets/M1.png" id="3_mdrrw"]
+[ext_resource type="PackedScene" uid="uid://betw1bn8n12j5" path="res://Scenes/HUD/win_screen.tscn" id="3_uwncq"]
 [ext_resource type="Texture2D" uid="uid://dlll0v56c3ssy" path="res://Assets/Health-Blood.png" id="4_8wqxc"]
 [ext_resource type="Texture2D" uid="uid://reiibebyp30g" path="res://Assets/M2.png" id="4_ue6o6"]
 [ext_resource type="Texture2D" uid="uid://dqalerg6juj0q" path="res://Assets/M3.png" id="5_uwncq"]
@@ -12,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://cg4bmi6oxy1gw" path="res://Assets/M5.png" id="7_jx11y"]
 [ext_resource type="Texture2D" uid="uid://bh25pitrxg7p6" path="res://Assets/6.png" id="8_oqfm8"]
 [ext_resource type="Texture2D" uid="uid://cmuomji4hw2mr" path="res://Assets/7.png" id="9_bw5kp"]
+[ext_resource type="PackedScene" uid="uid://cm7y0x6ugvkwp" path="res://Scenes/HUD/eye_death.tscn" id="15_jx11y"]
+[ext_resource type="PackedScene" uid="uid://0xyro4kn2foy" path="res://Scenes/HUD/skelly_death.tscn" id="16_jx11y"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_buuh3"]
 frames = 7
@@ -32,6 +36,10 @@ frame_6/duration = 0.3
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_33i1w")
+game_over_scene = ExtResource("2_ue6o6")
+win_screen_scene = ExtResource("3_uwncq")
+skel_death_scene = ExtResource("16_jx11y")
+eye_death_scene = ExtResource("15_jx11y")
 
 [node name="CorruptionMeter" type="TextureProgressBar" parent="."]
 offset_left = 53.0
@@ -51,3 +59,5 @@ fill_mode = 3
 texture_under = ExtResource("2_k83ni")
 texture_over = ExtResource("3_6pkbx")
 texture_progress = ExtResource("4_8wqxc")
+
+[node name="Audio" type="Node" parent="."]

@@ -23,6 +23,11 @@ var movement_force = acceleration * mass * 32 # px/m
 @export var projectile_speed: float = 200
 @export var projectile_damage: float = 20.0
 
+
+@onready var moving_player: AudioStreamPlayer = ($Audio/Moving as AudioStreamPlayer)
+@onready var death_player: AudioStreamPlayer = ($Audio/Death as AudioStreamPlayer)
+@onready var bash_player: AudioStreamPlayer = ($Audio/Bash as AudioStreamPlayer)
+
 signal death(mob: RangedMob)
 
 var player_in_range: Player = null
@@ -72,6 +77,7 @@ func _physics_process(delta: float) -> void:
 	
 	handle_damage(delta)
 	
+	
 	if agro and not attacking:
 	# Decide behavior based on distance
 		#print(stuck)
@@ -92,11 +98,18 @@ func _physics_process(delta: float) -> void:
 		#if agro:
 			#print("enemy agro'ed")
 	
-	do_animation()
+	do_animation(delta)
 	
 	prev_velocity = linear_velocity
+	
+	if linear_velocity.length() > Globals.flip_velocity:
+		if not moving_player.playing:
+			moving_player.play()
+	else:
+		if moving_player.playing:
+			moving_player.stop()
 
-func do_animation() -> void:
+func do_animation(delta: float) -> void:
 	if body.animation == "attacking" and not attacking:
 		body.play("idle")
 	elif body.animation == "idle" and attacking:
@@ -104,6 +117,13 @@ func do_animation() -> void:
 	
 	if linear_velocity.length() > Globals.flip_velocity:
 		body.flip_h = linear_velocity.x < 0
+	
+	if t_anim_goal != 0:
+		t_anim += delta
+		body.set_instance_shader_parameter("t", t_anim/t_anim_goal)
+		if t_anim >= t_anim_goal:
+			t_anim_goal = 0
+			t_anim = 0
 	
 
 func handle_damage(delta: float) -> void:
@@ -113,7 +133,11 @@ func handle_damage(delta: float) -> void:
 	
 	#print("force on ranged: ", force, "/", force_threshold)
 	
-	if force > force_threshold:
+	if force > force_threshold and player.is_hitting:
+		if not bash_player.playing:
+			#print("Bashed")
+			bash_player.play()
+		
 		var damage: float = force/25000 * damage_tuner
 		#print("damage taken: ", damage, " | ", force/25000, "*", damage_tuner)
 		health_module.take_damage(damage)
@@ -189,22 +213,37 @@ func apply_movement(direction: Vector2) -> void:
 	apply_central_force(comp_dir)
 
 func shoot_projectile():
-	#print("shooting")
-	
-	var dir = (player_in_range.global_position - global_position).normalized()
+	print("shooting")
+#	
+	var dir = (player.global_position - global_position).normalized()
 	var projectile = projectile_scene.instantiate()
 	
+	get_parent().add_child(projectile)
 	projectile.global_position = global_position + Vector2(0, -hitbox_shape.shape.get_rect().size.y/2-3)
+	print(projectile.global_position)
+	print(player.global_position)
 	projectile.rotation = dir.angle()
 
 	# Apply velocity if available
 	#print("given speed: ", projectile_speed)
 	projectile.linear_velocity = dir * projectile_speed
 	projectile.damage = projectile_damage
-	get_parent().add_child(projectile)
 	shooting_timer.start(shoot_interval)
 	
 	stop_attacking()
+
+func take_damage(_damage: float) -> void:
+	flash(Color.RED, 0.7, 0.3)
+
+## Flashing
+var t_anim: float = 0
+var t_anim_goal: float = 0
+var c_anim: Color = Color.WHITE
+
+func flash(color: Color, depth: float, duration: float) -> void:
+	t_anim_goal = duration
+	body.set_instance_shader_parameter("color", color)
+	body.set_instance_shader_parameter("depth", depth)
 
 
 func _on_shooting_area_area_entered(body) -> void:

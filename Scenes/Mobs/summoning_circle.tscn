@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://cs1tko6b1oq2s"]
+[gd_scene load_steps=19 format=3 uid="uid://cs1tko6b1oq2s"]
 
 [ext_resource type="Script" uid="uid://dsc3lcnbigmrq" path="res://Scenes/Mobs/summoning_circle.gd" id="1_5q21y"]
+[ext_resource type="AudioStream" uid="uid://b554l0i5uqnga" path="res://Assets/SoundEffects/GameSounds/Summon-Sped-Up.mp3" id="3_okr8s"]
 [ext_resource type="Texture2D" uid="uid://d0ybukkmiisgn" path="res://Assets/mobs/eye_projectile_summon.png" id="3_rgm1p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hyy4e"]
@@ -114,5 +115,9 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_18avy")
 animation = &"Summon"
 script = ExtResource("1_5q21y")
+
+[node name="Summoning" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_okr8s")
+volume_db = -19.875
 
 [connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

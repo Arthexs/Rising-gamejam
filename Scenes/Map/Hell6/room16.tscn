@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=4 uid="uid://cc2me6a57pmje"]
+[gd_scene load_steps=9 format=4 uid="uid://bgnkur72m6vpl"]
 
 [ext_resource type="Script" uid="uid://cnjbh0gl5gaah" path="res://Scenes/Map/room.gd" id="1_4ka1u"]
 [ext_resource type="Texture2D" uid="uid://cc4utqf48xphi" path="res://Assets/Map/Hell6/23istheone.png" id="2_f23d6"]
 [ext_resource type="TileSet" uid="uid://b4mjquid3iman" path="res://Scenes/Map/flooring.tres" id="3_ayk5x"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_v1m8i"]
-vertices = PackedVector2Array(434.797, 13.2031, 502, 13.2031, 502, 74, 566, 74, 566, 138, 458, 246, 333.203, 246, 333.203, 178.797, 394, 138, 630, 138, 630, 202, 758, 202, 758, 242.797, 754.797, 242.797, 754.797, 310, 630, 310, 630, 374, 566, 374, 566, 434.797, 498.797, 434.797, 498.797, 438, 458, 438, 330, 178.797, 330, 138, 394, 10, 434.797, 10)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(2, 3, 4, 5, 6, 7, 8), PackedInt32Array(4, 9, 10, 5), PackedInt32Array(10, 11, 12, 13), PackedInt32Array(10, 13, 14, 15, 5), PackedInt32Array(15, 16, 17, 5), PackedInt32Array(17, 18, 19, 5), PackedInt32Array(19, 20, 21, 5), PackedInt32Array(7, 22, 23, 8), PackedInt32Array(2, 8, 24, 0), PackedInt32Array(25, 0, 24)])
+vertices = PackedVector2Array(429.797, 18.2031, 497, 18.2031, 497, 79, 561, 79, 561, 143, 463, 241, 399, 143, 625, 143, 625, 207, 753, 207, 753, 237.797, 749.797, 237.797, 749.797, 305, 625, 305, 625, 369, 561, 369, 561, 429.797, 493.797, 429.797, 493.797, 433, 463, 433, 338.203, 241, 338.203, 173.797, 335, 173.797, 335, 143, 399, 15, 429.797, 15)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(2, 3, 4, 5, 6), PackedInt32Array(4, 7, 8, 5), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(8, 11, 12, 13, 5), PackedInt32Array(13, 14, 15, 5), PackedInt32Array(15, 16, 17, 5), PackedInt32Array(17, 18, 19, 5), PackedInt32Array(5, 20, 21, 6), PackedInt32Array(21, 22, 23, 6), PackedInt32Array(2, 6, 24, 0), PackedInt32Array(25, 0, 24)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(376, -42, 524, -39, 524, 18, 596, 22, 592, 88, 650, 88, 653, 149, 775, 152, 779, 340, 654, 338, 650, 397, 588, 397, 588, 486, 498, 490, 497, 459, 435, 458, 431, 274, 304, 275, 304, 79, 363, 82)])
+agent_radius = 15.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1og81"]
 texture = ExtResource("2_f23d6")

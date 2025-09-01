@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://k4amd4bcaixf"]
+
+[ext_resource type="Texture2D" uid="uid://c2e4xy0g23i14" path="res://Assets/Items/Speed-Item.png" id="1_xm8hj"]
+[ext_resource type="Script" uid="uid://bd0lw8lobco6f" path="res://Scenes/Items/speed_item.gd" id="2_xm8hj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eb5tt"]
+radius = 18.0
+
+[node name="SpeedItem" type="Sprite2D" node_paths=PackedStringArray("interaction_range")]
+texture_filter = 1
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_xm8hj")
+script = ExtResource("2_xm8hj")
+interaction_range = NodePath("InteractionRange/CollisionShape2D")
+
+[node name="InteractionRange" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionRange"]
+shape = SubResource("CircleShape2D_eb5tt")
